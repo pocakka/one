@@ -1,0 +1,80 @@
+{
+  "magazin_nev": "AI Shield",
+  "szam": "2025/01",
+  "kiadas_datum": "2025 Január",
+  "oldalszam_cel": 30,
+  "tema": "AI Biztonság Mindenkinek",
+  "alcim": "Védelem az AI korszakban - családoknak, vállalatoknak, szakértőknek",
+  "fo_szinek": {
+    "primary": "#2E86AB",
+    "secondary": "#A23B72",
+    "danger": "#C73E1D",
+    "success": "#6A994E",
+    "background": "#F8F9FA",
+    "text": "#212529",
+    "accent": "#F77F00"
+  },
+  "rovatok": [
+    {
+      "nev": "Hírek & Trendek",
+      "ikon": "📰",
+      "cikkek_szama": 3,
+      "atlag_hossz": 400
+    },
+    {
+      "nev": "Kezdőknek",
+      "ikon": "🌱",
+      "cikkek_szama": 4,
+      "atlag_hossz": 650
+    },
+    {
+      "nev": "Családi AI",
+      "ikon": "👨‍👩‍👧‍👦",
+      "cikkek_szama": 3,
+      "atlag_hossz": 580
+    },
+    {
+      "nev": "Vállalati Fókusz",
+      "ikon": "🏢",
+      "cikkek_szama": 5,
+      "atlag_hossz": 700
+    },
+    {
+      "nev": "Szakértői Műhely",
+      "ikon": "🔬",
+      "cikkek_szama": 4,
+      "atlag_hossz": 850
+    },
+    {
+      "nev": "Termékkörkép",
+      "ikon": "🛡️",
+      "cikkek_szama": 3,
+      "atlag_hossz": 700
+    },
+    {
+      "nev": "Interjú",
+      "ikon": "💬",
+      "cikkek_szama": 1,
+      "atlag_hossz": 1000
+    },
+    {
+      "nev": "Hasznos",
+      "ikon": "🔧",
+      "cikkek_szama": 3,
+      "atlag_hossz": 300
+    }
+  ],
+  "szerzok": [
+    "AI Shield Szerkesztőség"
+  ],
+  "kontakt": {
+    "email": "info@aishield.hu",
+    "web": "https://aishield.hu",
+    "social": {
+      "linkedin": "ai-shield-magazin",
+      "twitter": "@AIShieldHU"
+    }
+  },
+  "copyright": "© 2025 AI Shield Magazin. Minden jog fenntartva.",
+  "licensz": "CC BY-NC-SA 4.0"
+}
