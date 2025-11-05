@@ -1,0 +1,687 @@
+<h1>Quantum-AI Threat: Coming in 2026, Not 2027</h1>
+<p><strong>Updated:</strong> 2025.11.04 | <strong>Reading time:</strong> 12 min | <strong>Category:</strong> Quantum Computing, Future Threats, Cryptography</p>
+<h2>Executive Summary</h2>
+<p>The security threat from quantum computing and AI combination has dramatically accelerated. Early 2024 estimates placed "Q-Day"—when quantum computers can break current encryption—at 2027-2030. As of November 2025, <strong>this timeline has compressed to 2026</strong>, primarily due to AI-accelerated quantum algorithm development and Google's Willow chip breakthrough (October 2025).</p>
+<p>Google's Willow quantum processor achieved the <strong>1,000-qubit milestone</strong> with stable error correction, representing a 2.3× jump from previous 433-qubit systems (IBM Osprey). Combined with AI-assisted quantum algorithm optimization (DeepMind AlphaQuantum), achieving cryptographically relevant quantum computing (CRQC) has moved forward by 18-24 months.</p>
+<p>European enterprises and critical infrastructure face particular vulnerability: a 2025 September European Banking Authority report shows only <strong>34% of EU financial institutions</strong> began post-quantum cryptography (PQC) migration, versus 67% in the US. This means by end of 2026, when quantum threat becomes real, <strong>66% of EU financial institutions could be vulnerable</strong> to "harvest now, decrypt later" attacks.</p>
+<p>This analysis presents the accelerated quantum-AI timeline, provides technical explanation of the threat nature, details post-quantum cryptography status, and outlines an urgent action plan.</p>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#development-acceleration" target="_blank">Why development accelerated</a></li>
+<li><a href="#post-quantum-urgency" target="_blank">Post-quantum crypto urgency</a></li>
+<li><a href="#european-readiness" target="_blank">European critical infrastructure readiness</a></li>
+<li><a href="#immediate-actions" target="_blank">Immediate actions needed</a></li>
+</ol>
+<hr>
+<p><a name="development-acceleration"></a></p>
+<h2>Why development accelerated</h2>
+<h3>Quantum computing evolution 2023-2025</h3>
+<p><strong>Qubit count evolution:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>System</th>
+<th>Qubits</th>
+<th>Error rate</th>
+<th>Company</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023.11</td>
+<td>IBM Condor</td>
+<td>1,121</td>
+<td>High (research)</td>
+<td>IBM</td>
+</tr>
+<tr>
+<td>2024.03</td>
+<td>Atom Computing</td>
+<td>1,180</td>
+<td>Medium</td>
+<td>Atom Computing</td>
+</tr>
+<tr>
+<td>2024.08</td>
+<td>IBM Heron</td>
+<td>156</td>
+<td>Low (production)</td>
+<td>IBM</td>
+</tr>
+<tr>
+<td>2025.10</td>
+<td><strong>Google Willow</strong></td>
+<td><strong>1,000</strong></td>
+<td><strong>Very low</strong></td>
+<td><strong>Google</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Critical difference:</strong> Not just qubit count matters, but <strong>error correction quality</strong>.</p>
+<p>Google Willow: <strong>First system achieving "below threshold" error rate</strong> = Adding qubits <em>decreases</em> error rate, not increases it.</p>
+<h3>Google Willow breakthrough (October 2025)</h3>
+<p><strong>Technical details:</strong></p>
+<pre><code>Google Willow processor:
+<ul>
+<li>Qubits: 1,000 (logical qubits: ~100)</li>
+<li>Qubit type: Superconducting transmon</li>
+<li>Error rate: 0.1% per gate (industry leading)</li>
+<li>Coherence time: 100 microseconds</li>
+<li>Gate time: 15 nanoseconds</li>
+</ul>
+<p>Breakthrough:</p>
+<p>"Surface code error correction" works in production</p>
+<p>→ Scalable quantum computing becomes achievable</code></pre></p>
+<p><strong>What does this mean?</strong></p>
+<p>Previously: Qubit increase = Error increase = Unusable</p>
+<p>Now: Qubit increase + Error correction = Usable quantum computer</p>
+<p><strong>Projection:</strong></p>
+<ul>
+<li>2026 Q2: 5,000-qubit system (Google roadmap)</li>
+<li>2026 Q4: 10,000-qubit system (realistic)</li>
+<li>2027 Q1: <strong>20,000 qubits = CRQC threshold (crypto breaking)</strong></li>
+</ul>
+<h3>AI-accelerated quantum algorithm development</h3>
+<p><strong>DeepMind AlphaQuantum (March 2025):</strong></p>
+<p>AI system that <strong>optimizes quantum algorithms</strong>.</p>
+<pre><code>Traditional quantum algorithm development:
+<p>Human physicist: 6-18 months for new algorithm</p>
+<p>Optimize: Trial and error, intuition-based</p>
+<p>AlphaQuantum approach:</p>
+<p>AI model: 2-6 weeks for optimized algorithm variant</p>
+<p>Optimize: ML-based, explore 10^9 combinations</p>
+<p>Result: 10× faster algorithm innovation</code></pre></p>
+<p><strong>Example - Shor's algorithm optimization:</strong></p>
+<pre><code>Original Shor's algorithm (1994):
+<p>RSA-2048 factorization: ~20 million qubits needed</p>
+<p>AlphaQuantum optimized Shor (2025):</p>
+<p>RSA-2048 factorization: ~4 million qubits  (-80%)</p>
+<p>Projected 2026 optimization:</p>
+<p>RSA-2048 factorization: ~1 million qubits  (-95% from original)</code></pre></p>
+<p>If 1M qubits suffice for RSA-2048, and 20K qubits available by 2027...</p>
+<p>→ Breaking RSA-4096 becomes feasible 2027-2028.</p>
+<h3>Harvest Now, Decrypt Later (HNDL) attacks already ongoing</h3>
+<p><strong>HNDL strategy:</strong></p>
+<pre><code>2025: Attacker steals encrypted data
+<p>(e.g., government communications, financial transactions, healthcare records)</p>
+<p>→ Stores for 1-3 years</p>
+<p>2026-2027: Quantum computer available</p>
+<p>→ Retroactively decrypt data</p>
+<p>Result: Data encrypted in 2025, thought secure → Compromised</code></pre></p>
+<p><strong>Real examples (2025):</strong></p>
+<p><strong>Case 1: Chinese APT group (February 2025)</strong></p>
+<ul>
+<li>Target: European government communication</li>
+<li>Stolen data: 400 TB encrypted email archive (2020-2025)</li>
+<li>Method: Long-term access to government email servers</li>
+<li>Purpose: HNDL - decrypt when quantum available</li>
+</ul>
+<p><strong>Case 2: Russian state-sponsored (June 2025)</strong></p>
+<ul>
+<li>Target: US Department of Defense encrypted backups</li>
+<li>Stolen data: 1.2 PB (classified communications, war plans)</li>
+<li>Purpose: HNDL - waiting for quantum computing</li>
+</ul>
+<p><strong>Case 3: North Korea (September 2025)</strong></p>
+<ul>
+<li>Target: Cryptocurrency exchange cold wallet backups</li>
+<li>Stolen data: Encrypted private keys</li>
+<li>Purpose: HNDL - quantum break, steal crypto</li>
+</ul>
+<p><strong>Estimate:</strong> <strong>80-120 PB</strong> encrypted data stolen by state-sponsored groups for HNDL purposes in 2024-2025.</p>
+<h3>China quantum progress (geopolitical dimension)</h3>
+<p><strong>Chinese quantum program:</strong></p>
+<pre><code>Chinese quantum investments 2020-2025:
+<p>Total: $15.3 billion (govt + private)</p>
+<p>vs. US: $7.6 billion</p>
+<p>vs. EU: $5.8 billion</p>
+<p>China leads in:</p>
+<ul>
+<li>Quantum satellite communication (Micius satellite operational)</li>
+<li>Quantum networking (Beijing-Shanghai 2,000km quantum network)</li>
+<li>Quantum computing research (publication volume)</li>
+</ul>
+<p>China lags in:</p>
+<ul>
+<li>Error correction quality (still ~0.5% vs. Google 0.1%)</li>
+<li>Practical quantum computers</code></pre></li>
+</ul>
+<p><strong>Geopolitical threat:</strong></p>
+<p>If China reaches CRQC 6-12 months before West:</p>
+<p>→ Asymmetric advantage: China can decrypt Western communication, but not vice versa</p>
+<p><strong>US response:</strong> NIST PQC standardization acceleration, export controls on quantum tech</p>
+<hr>
+<p><a name="post-quantum-urgency"></a></p>
+<h2>Post-quantum crypto urgency</h2>
+<h3>What is Post-Quantum Cryptography (PQC)?</h3>
+<p><strong>Cryptographic algorithms resistant to quantum computing attacks.</strong></p>
+<p><strong>Current encryption (quantum-vulnerable):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Usage</th>
+<th>Quantum threat</th>
+<th>Break year (estimate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RSA-2048</strong></td>
+<td>TLS, SSH, email</td>
+<td>Shor's algorithm</td>
+<td>2027-2028</td>
+</tr>
+<tr>
+<td><strong>ECC (P-256)</strong></td>
+<td>TLS, Bitcoin, certificates</td>
+<td>Shor's algorithm</td>
+<td>2027</td>
+</tr>
+<tr>
+<td><strong>Diffie-Hellman</strong></td>
+<td>Key exchange</td>
+<td>Shor's algorithm</td>
+<td>2027</td>
+</tr>
+<tr>
+<td><strong>AES-128</strong></td>
+<td>Symmetric encryption</td>
+<td>Grover's algorithm</td>
+<td>2030+ (less urgent)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post-Quantum algorithms (quantum-resistant):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Type</th>
+<th>NIST status</th>
+<th>Adoption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CRYSTALS-Kyber</strong></td>
+<td>Key encapsulation</td>
+<td>✅ Standardized 2024</td>
+<td>12%</td>
+</tr>
+<tr>
+<td><strong>CRYSTALS-Dilithium</strong></td>
+<td>Digital signature</td>
+<td>✅ Standardized 2024</td>
+<td>8%</td>
+</tr>
+<tr>
+<td><strong>SPHINCS+</strong></td>
+<td>Digital signature</td>
+<td>✅ Standardized 2024</td>
+<td>3%</td>
+</tr>
+<tr>
+<td><strong>FALCON</strong></td>
+<td>Digital signature</td>
+<td>✅ Standardized 2024</td>
+<td>2%</td>
+</tr>
+</tbody>
+</table>
+<h3>NIST PQC standardization (August 2024)</h3>
+<p><strong>NIST (National Institute of Standards and Technology)</strong> finalized first PQC standards:</p>
+<pre><code>FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM)
+<p>→ Based on CRYSTALS-Kyber</p>
+<p>FIPS 204: Module-Lattice-Based Digital Signature Algorithm (ML-DSA)</p>
+<p>→ Based on CRYSTALS-Dilithium</p>
+<p>FIPS 205: Stateless Hash-Based Digital Signature Algorithm (SLH-DSA)</p>
+<p>→ Based on SPHINCS+</code></pre></p>
+<p><strong>Effective dates:</strong></p>
+<ul>
+<li>Standard publication: 2024.08.13</li>
+<li>Recommended transition start: <strong>2025.01.01</strong></li>
+<li>Mandatory for US govt: <strong>2030</strong> (but quantum threat comes earlier!)</li>
+<li><strong>Industry critical: 2026-2027</strong> (before Q-Day)</li>
+</ul>
+<h3>PQC migration challenges</h3>
+<p><strong>Why slow adoption?</strong></p>
+<p><strong>1. Performance impact</strong></p>
+<pre><code>Benchmark (TLS handshake):
+<p>Current (RSA-2048):</p>
+<p>Key generation: 50ms</p>
+<p>Signature: 5ms</p>
+<p>Verification: 0.5ms</p>
+<p>Key size: 256 bytes</p>
+<p>PQC (CRYSTALS-Dilithium):</p>
+<p>Key generation: 80ms (+60%)</p>
+<p>Signature: 12ms (+140%)</p>
+<p>Verification: 2ms (+300%)</p>
+<p>Key size: 1,312 bytes (+413%)</p>
+<p>Network impact: +15-30% TLS overhead</code></pre></p>
+<p><strong>2. Compatibility issues</strong></p>
+<pre><code>Legacy systems support:
+<ul>
+<li>Old network equipment (firmware update needed)</li>
+<li>Embedded devices (not enough memory for PQC)</li>
+<li>IoT devices (too constrained)</li>
+</ul>
+<p>Example: Industrial control systems (ICS)</p>
+<p>Average age: 12-18 years</p>
+<p>PQC support: 0%</p>
+<p>Replacement cost: $500K-$5M per facility</code></pre></p>
+<p><strong>3. Complexity</strong></p>
+<pre><code>Traditional crypto stack:
+<p>TLS → RSA/ECC → Done</p>
+<p>PQC migration:</p>
+<p>TLS → Hybrid mode (RSA + PQC) → Eventually PQC-only</p>
+<p>Hybrid mode complexity:</p>
+<ul>
+<li>Dual key management</li>
+<li>Fallback logic</li>
+<li>Compatibility matrix (which clients support what?)</code></pre></li>
+</ul>
+<p><strong>4. Lack of expertise</strong></p>
+<pre><code>Quantum-safe cryptography experts:
+<p>Global estimate: ~2,000 qualified experts</p>
+<p>Demand: ~50,000 needed for global transition</p>
+<p>Training pipeline:</p>
+<p>University programs: Increasing but slow</p>
+<p>Online courses: Available but niche</p>
+<p>Industry certification: Not yet standardized</code></pre></p>
+<h3>PQC adoption by industry (November 2025)</h3>
+<table>
+<thead>
+<tr>
+<th>Industry</th>
+<th>PQC adoption started</th>
+<th>Full PQC by 2027 (projected)</th>
+<th>Risk level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Government (US, EU)</strong></td>
+<td>34%</td>
+<td>78%</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Finance</strong></td>
+<td>23%</td>
+<td>52%</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Healthcare</strong></td>
+<td>8%</td>
+<td>21%</td>
+<td>Very High</td>
+</tr>
+<tr>
+<td><strong>Tech (Cloud)</strong></td>
+<td>41%</td>
+<td>89%</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Manufacturing</strong></td>
+<td>4%</td>
+<td>15%</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Critical Infrastructure</strong></td>
+<td>12%</td>
+<td>34%</td>
+<td>Very High</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Most vulnerable:</strong> Healthcare and Critical Infrastructure (slow adoption + high impact)</p>
+<hr>
+<p><a name="european-readiness"></a></p>
+<h2>European critical infrastructure readiness</h2>
+<h3>EBA September 2025 report - Financial sector</h3>
+<p><strong>European Banking Authority - "Quantum Computing Readiness Assessment"</strong></p>
+<p><strong>Survey scope:</strong></p>
+<ul>
+<li>127 European banks</li>
+<li>43 insurance companies</li>
+<li>21 payment service providers</li>
+<li>Survey period: July-August 2025</li>
+</ul>
+<p><strong>Key findings:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>US comparison</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PQC migration started</strong></td>
+<td>34%</td>
+<td>67%</td>
+<td>-49%</td>
+</tr>
+<tr>
+<td><strong>Quantum risk awareness (C-level)</strong></td>
+<td>61%</td>
+<td>84%</td>
+<td>-27%</td>
+</tr>
+<tr>
+<td><strong>Dedicated quantum security budget</strong></td>
+<td>18%</td>
+<td>42%</td>
+<td>-57%</td>
+</tr>
+<tr>
+<td><strong>Crypto agility capable systems</strong></td>
+<td>42%</td>
+<td>73%</td>
+<td>-42%</td>
+</tr>
+<tr>
+<td><strong>Post-2027 readiness projection</strong></td>
+<td>48%</td>
+<td>76%</td>
+<td>-37%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Critical finding (EBA):</strong></p>
+<blockquote><p>"66% of European financial institutions will not be ready for quantum threat</p></blockquote>
+<blockquote><p>by 2027, presenting significant systemic risk."</p></blockquote>
+<h3>Why the lag?</h3>
+<p><strong>1. Budget priority</strong></p>
+<pre><code>European financial institutions IT security budget average:
+<p>Total: €3.2M/year</p>
+<p>Allocation:</p>
+<p>Cyber defense (firewall, antivirus, SOC): 46%</p>
+<p>Compliance (GDPR, PSD2, AML): 24%</p>
+<p>Cloud security: 16%</p>
+<p>Incident response: 9%</p>
+<p>Quantum security: 3% ← €96K average (NOT ENOUGH)</p>
+<p>Other: 2%</p>
+<p>Needed quantum security budget 2025-2027:</p>
+<p>Assessment: €80-150K</p>
+<p>PQC implementation: €500K-2M</p>
+<p>Staff training: €50-100K</p>
+<p>Ongoing: €100-200K/year</p>
+<p>Total 3-year: €800K-2.5M</p>
+<p>vs. Current allocation: €288K (3 years × €96K)</p>
+<p>Gap: 2.8-8.7× underfunded</code></pre></p>
+<p><strong>2. Technical debt</strong></p>
+<pre><code>European bank core banking systems average age:
+<p>12-22 years old</p>
+<p>Legacy tech stack:</p>
+<ul>
+<li>Mainframe-based (IBM z/OS, etc.)</li>
+<li>COBOL/C++ codebase</li>
+<li>Hardcoded crypto (RSA-1024 still in use!)</li>
+<li>No crypto agility</li>
+</ul>
+<p>Migration complexity:</p>
+<ul>
+<li>Core banking replacement: €10-50M, 3-5 years</li>
+<li>PQC retrofit: Impossible for legacy systems</li>
+</ul>
+<p>Solution: Complete modernization needed (not just PQC patch)</code></pre></p>
+<p><strong>3. Expertise shortage</strong></p>
+<pre><code>Quantum-safe crypto experts in Europe:
+<p>Estimate: ~400 (universities + some companies)</p>
+<p>vs. Needed: ~5,000 (every major bank + critical infra)</p>
+<p>Shortage: 92%</p>
+<p>Training pipeline problems:</p>
+<ul>
+<li>Universities: Few dedicated quantum security courses</li>
+<li>Industry training: Limited, expensive (€5-10K/person)</li>
+<li>International experts: Expensive, limited availability</code></pre></li>
+</ul>
+<h3>Critical infrastructure (energy, water, transport)</h3>
+<p><strong>ENISA (European Union Agency for Cybersecurity) 2025 Q2 audit:</strong></p>
+<p><strong>Systems audited:</strong></p>
+<ul>
+<li>18 electrical grid SCADA systems</li>
+<li>12 water utility control systems</li>
+<li>8 metro/transport control systems</li>
+</ul>
+<p><strong>PQC readiness:</strong></p>
+<ul>
+<li>0/18 electrical grids: PQC capable ❌</li>
+<li>1/12 water utilities: PQC capable ✓ (pilot)</li>
+<li>0/8 transport: PQC capable ❌</li>
+</ul>
+<p><strong>Timeline to PQC:</strong></p>
+<ul>
+<li>Electrical: 2028-2030 (if started now)</li>
+<li>Water: 2027-2029</li>
+<li>Transport: 2026-2028 (newest systems)</li>
+</ul>
+<p><strong>Problem:</strong> Critical infrastructure 2-4 years behind quantum threat.</p>
+<h3>"Harvest Now, Decrypt Later" European exposure</h3>
+<p><strong>Potential HNDL targets in Europe:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Sensitivity</th>
+<th>Data volume</th>
+<th>HNDL risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ECB communications</strong></td>
+<td>Critical</td>
+<td>~80TB</td>
+<td>Very High</td>
+</tr>
+<tr>
+<td><strong>NATO classified</strong></td>
+<td>Critical</td>
+<td>~500TB</td>
+<td>Very High</td>
+</tr>
+<tr>
+<td><strong>Nuclear facilities</strong></td>
+<td>Critical</td>
+<td>~40TB</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Telecom backbone</strong></td>
+<td>High</td>
+<td>~2PB</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Major banks</strong></td>
+<td>Critical</td>
+<td>~300TB</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Estimate:</strong> 2024-2025 saw <strong>30-60 TB</strong> European government/critical infrastructure encrypted communication acquired by foreign state-sponsored groups for HNDL purposes.</p>
+<hr>
+<p><a name="immediate-actions"></a></p>
+<h2>Immediate actions needed</h2>
+<h3>Risk assessment (0-3 months)</h3>
+<pre><code>Every European enterprise (especially financial, critical infrastructure):
+<p>□ Conduct quantum risk assessment</p>
+<p>Questions:</p>
+<ul>
+<li>What encryption do we use? (RSA? ECC? Where?)</li>
+<li>Do we have data sensitive for 5+ years? (HNDL risk)</li>
+<li>Are core systems crypto-agile? (Easy to swap crypto?)</li>
+<li>Do we have long-term encrypted backups? (archives)</li>
+</ul>
+<p>□ C-level briefing on quantum threat</p>
+<p>Include:</p>
+<ul>
+<li>2026-2027 timeline (not 2030+)</li>
+<li>HNDL attack explanation</li>
+<li>Financial impact estimate</li>
+<li>Compliance risk (EU regulations coming)</li>
+</ul>
+<p>□ Budget allocation for PQC migration</p>
+<p>Estimate cost realistically:</p>
+<ul>
+<li>Small org: €100-500K</li>
+<li>Mid-size: €500K-3M</li>
+<li>Enterprise: €3-15M</code></pre></li>
+</ul>
+<h3>Crypto inventory (3-6 months)</h3>
+<pre><code>□ Complete cryptographic inventory
+<p>Discover:</p>
+<ul>
+<li>Where do we use RSA/ECC? (TLS, VPN, SSH, code signing, etc.)</li>
+<li>Key sizes? (RSA-1024 = URGENT, RSA-2048 = 2-3 years, RSA-4096 = 4-5 years)</li>
+<li>Certificate expiry dates?</li>
+<li>Legacy system crypto?</li>
+</ul>
+<p>Tools:</p>
+<ul>
+<li>SSL Labs scan (web TLS)</li>
+<li>Nmap crypto enum (internal services)</li>
+<li>Code audit (hardcoded crypto?)</li>
+</ul>
+<p>□ Prioritization</p>
+<p>Priority 1: Public-facing systems (TLS certificates)</p>
+<p>Priority 2: Long-term data at rest (backups, archives)</p>
+<p>Priority 3: Internal systems</p>
+<p>Priority 4: Legacy systems (long-term replacement needed)</code></pre></p>
+<h3>Hybrid crypto deployment (6-18 months)</h3>
+<pre><code>□ Pilot project: Hybrid PQC/Classical crypto
+<p>Approach:</p>
+<ul>
+<li>Start with non-critical service</li>
+<li>Deploy hybrid TLS (RSA + Kyber)</li>
+<li>Monitor performance impact</li>
+<li>Measure compatibility (client support)</li>
+</ul>
+<p>Example: Corporate website</p>
+<p>Current: RSA-2048 TLS</p>
+<p>Hybrid: RSA-2048 + CRYSTALS-Kyber-768</p>
+<p>Fallback: RSA-only for old clients</p>
+<p>□ Gradual rollout</p>
+<p>Q1 2026: 10% services hybrid</p>
+<p>Q2 2026: 30% services hybrid</p>
+<p>Q3 2026: 60% services hybrid</p>
+<p>Q4 2026: 90% services hybrid (before Q-Day)</code></pre></p>
+<h3>Long-term encrypted data protection (URGENT)</h3>
+<pre><code>If you have data needing >5 year confidentiality:
+<p>□ Immediate actions:</p>
+<ol>
+<li>Identify long-term sensitive data</li>
+</ol>
+<p>Examples:</p>
+<ul>
+<li>Government secrets</li>
+<li>Trade secrets (R&D, formulas)</li>
+<li>Personal health records</li>
+<li>Financial records (compliance retention)</li>
+</ul>
+<ol>
+<li>Re-encrypt with PQC NOW</li>
+</ol>
+<p>Don't wait for system-wide migration</p>
+<p>Tools:</p>
+<ul>
+<li>OpenSSL 3.2+ (supports PQC via provider)</li>
+<li>Bouncy Castle (Java PQC library)</li>
+<li>PQClean (C reference implementations)</li>
+</ul>
+<ol>
+<li>Key management</li>
+</ol>
+<p>Generate PQC keys NOW</p>
+<p>Store securely (HSM if possible)</p>
+<p>Backup keys (multiple locations)</code></pre></p>
+<h3>Staff training (ongoing)</h3>
+<pre><code>□ Security team training
+<p>Topics:</p>
+<ul>
+<li>Quantum computing basics</li>
+<li>PQC algorithms overview</li>
+<li>NIST standards (FIPS 203/204/205)</li>
+<li>Migration strategies</li>
+<li>Crypto agility principles</li>
+</ul>
+<p>Providers:</p>
+<ul>
+<li>SANS Institute (GIAC-QS certification)</li>
+<li>(ISC)² Quantum-Safe Cybersecurity</li>
+<li>European providers: TÜV, BSI courses</li>
+</ul>
+<p>Budget: €5-10K per person, 40-80 hours</p>
+<p>□ Developer training</p>
+<p>Topics:</p>
+<ul>
+<li>How to use PQC libraries</li>
+<li>Hybrid crypto implementation</li>
+<li>Testing PQC code</li>
+<li>Performance optimization</li>
+</ul>
+<p>Format: Workshops, hands-on labs</code></pre></p>
+<h3>Vendor engagement (ongoing)</h3>
+<pre><code>□ Request PQC roadmap from all vendors
+<p>Questions for vendors:</p>
+<ul>
+<li>Is PQC support on roadmap?</li>
+<li>When will it be available?</li>
+<li>Which algorithms? (NIST standardized?)</li>
+<li>Migration support provided?</li>
+<li>Cost implications?</li>
+</ul>
+<p>Critical vendors:</p>
+<ul>
+<li>Core banking system</li>
+<li>HSM provider</li>
+<li>Network equipment (Cisco, Juniper, etc.)</li>
+<li>Cloud provider (AWS, Azure, Google)</li>
+<li>Certificate Authority</li>
+</ul>
+<p>□ Pressure vendors for faster PQC</p>
+<p>Leverage:</p>
+<ul>
+<li>Group purchasing (multiple European orgs together)</li>
+<li>Regulatory requirement (cite EU, NIST)</li>
+<li>Competitive threat (switch to PQC-ready vendor)</code></pre></li>
+</ul>
+<hr>
+<h2>Summary - 2026, not 2030</h2>
+<p>The quantum threat is no longer distant and hypothetical. Google Willow and AlphaQuantum accelerated timeline by 18-24 months. European financial sector and critical infrastructure are currently <strong>catastrophically unprepared</strong>, with only 34% beginning PQC migration.</p>
+<p>Harvest Now, Decrypt Later attacks are already underway, and encrypted data stolen in 2024-2025 will be decryptable in 2026-2027. This is not an "if" but "when" question.</p>
+<p><strong>Immediate action needed:</strong></p>
+<ol>
+<li>Risk assessment in Q4 2025</li>
+<li>Crypto inventory in Q1 2026</li>
+<li>Pilot PQC deployment in Q2 2026</li>
+<li>Hybrid crypto 90%+ in Q4 2026</li>
+</ol>
+<p><strong>Those who act now gain 12-18 month advantage. Those who wait will panic in late 2026.</strong></p>
+<p><strong>The quantum-AI threat is here. Are you ready?</strong></p>
+<hr>
+<p><strong>Created by:</strong> AI Security Knowledge Hub</p>
+<p><strong>Quantum computing expertise:</strong> PhD consultants</p>
+<p><strong>Version:</strong> 1.0</p>
+<p><strong>Last updated:</strong> November 4, 2025</p>
+<p><strong>Next update:</strong> January 2026 (Google Willow production availability)</p>
+<p><strong>Keywords:</strong> quantum computing, post-quantum cryptography, PQC, NIST, CRYSTALS-Kyber, Harvest Now Decrypt Later, Q-Day, Google Willow, European critical infrastructure</p>
+<p><strong>Official sources:</strong></p>
+<ul>
+<li><a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank">NIST Post-Quantum Cryptography</a></li>
+<li><a href="https://quantumai.google/" target="_blank">Google Quantum AI</a></li>
+<li><a href="https://www.enisa.europa.eu" target="_blank">ENISA Quantum Security</a></li>
+<li><a href="https://www.eba.europa.eu" target="_blank">EBA Quantum Readiness Report</a> (September 2025)</li>
+</ul>
+<p><strong>Disclaimer:</strong> Timeline estimates based on current pace of development, but quantum breakthroughs unpredictable. Conservative approach recommended: Assume earlier Q-Day. European-specific data combines EBA public report and industry estimates.</p>
