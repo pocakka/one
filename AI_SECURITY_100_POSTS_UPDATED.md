@@ -53,6 +53,10 @@ ai_security_posts/
 
 **KRITIKUS:** Magyar cikkeknél minimalizáld az angol kifejezéseket!
 
+**KRITIKUS #2:** Magyar cikkeknél az olvasót **TEGEZŐ FORMÁBAN** szólítsd meg!
+- ✅ "Használd", "Készítsd el", "Vedd figyelembe", "Döntsd el", "Nézd meg"
+- ❌ "Használja", "Készítse el", "Vegye figyelembe", "Döntse el", "Nézze meg"
+
 **MEGTARTANDÓ ANGOL kifejezések:**
 - Márkanevek: ChatGPT, OpenAI, Google, Microsoft, AWS, Azure
 - Szabványok: MITRE ATT&CK, ISO 27001, NIST
