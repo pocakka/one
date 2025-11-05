@@ -1,0 +1,359 @@
+<h1>Microsoft Copilot november - Új DLP és Purview védelem</h1>
+
+<p><strong>Frissítve:</strong> 2025.11.04 | <strong>Olvasási idő:</strong> 11 perc | <strong>Frissítés dátuma:</strong> 2025. november 1.</p>
+
+<h2>Vezetői összefoglaló</h2>
+
+<p>Microsoft 2025. november 1-jén jelentős biztonsági frissítést jelentett be a Copilot for Microsoft 365 platformhoz. A frissítés három fő területet érint: mélyebb integráció a Microsoft Purview adatvédelmi megoldásokkal, kibővített adatveszteség-megelőzési (DLP) szabályzatok alkalmazása Copilot interakciókban, és új admin vezérlők a központi irányítás megkönnyítésére.</p>
+
+<p>A november i frissítés különösen fontos magyar vállalatok számára, mivel az EU AI Act november 1-i hatálybalépésével egybeesik, és konkrét megfelelőségi eszközöket biztosít a szabályozói követelmények teljesítéséhez. A frissítés elérhető minden Microsoft 365 E3/E5 és Business Premium licenccel rendelkező szervezet számára, külön költség nélkül.</p>
+
+<p>Ez az átfogó útmutató bemutatja az új biztonsági funkciókat, lépésről lépésre elmagyarázza az aktiválásuk módját, és gyakorlati tanácsokat ad a magyar nyelvű környezetben történő optimális konfigurációhoz.</p>
+
+<h2>Tartalomjegyzék</h2>
+<ul>
+  <li>Mi változott november 1-től?</li>
+  <li>Purview DLP policies Copilotban - Részletes áttekintés</li>
+  <li>Admin Center security controls - Új vezérlők</li>
+  <li>GPT-4.1 integráció (nem GPT-5!)</li>
+  <li>Magyar nyelvű támogatás fejlesztések</li>
+  <li>Konfigurációs útmutató lépésről lépésre</li>
+</ul>
+
+<h2>Mi változott november 1-től?</h2>
+
+<h3>A három fő újítás gyors áttekintése</h3>
+
+<p><strong>1. Purview DLP szabályzatok Copilotban:</strong> Most már a meglévő Purview adatveszteség-megelőzési szabályza
+
+taidat közvetlenül alkalmazhatod a Copilot interakciókra. Ha van szabályzatod például hitelkártyaszámok vagy társadalombiztosítási számok védelmére, ezek automatikusan érvényesülnek, amikor valaki Copilot segítségével dolgozik dokumentumokkal.</p>
+
+<p><strong>2. Admin Center biztonsági vezérlők:</strong> Új központi admin panel, ahol egyetlen helyről konfigurálhatod, hogy mely felhasználói csoportok férhetnek hozzá Copilothoz, milyen funkciókhoz, és milyen korlátozások érvényesülnek rájuk.</p>
+
+<p><strong>3. GPT-4.1 modell integráció:</strong> A Copilot háttérmodellje frissült az OpenAI GPT-4.1-re (nem a GPT-5-re, mint sokan várták). Ez javított teljesítményt, jobb magyar nyelvű válaszokat és 30%-kal gyorsabb válaszidőt jelent.</p>
+
+<h3>Miért fontos ez most?</h3>
+
+<p>A Microsoft időzítése nem véletlen. A november 1-i EU AI Act hatálybalépéssel párhuzamosan ezek a funkciók konkrét eszközöket adnak a szabályozói megfelelőséghez:</p>
+
+<ul>
+  <li><strong>Átláthatóság:</strong> Audit naplók minden Copilot interakcióról</li>
+  <li><strong>Adatvédelem:</strong> DLP szabályzatok garantálják, hogy bizalmas adatok nem kerülnek ki</li>
+  <li><strong>Emberi felügyelet:</strong> Admin vezérlők lehetővé teszik a Copilot használatának korlátozását és felügyeletét</li>
+</ul>
+
+<h2>Purview DLP policies Copilotban - Részletes áttekintés</h2>
+
+<h3>Mi az a Purview DLP?</h3>
+
+<p>A <strong>Microsoft Purview Data Loss Prevention (DLP)</strong> egy adatvédelmi megoldás, amely automatikusan felismeri és védi a bizalmas információkat. Például, ha valaki emailben vagy Teams üzenetben próbál meg hitelkártyaszámot küldeni, a DLP szabályzat észleli és blokkolhatja.</p>
+
+<p>2025 novemberéig a Purview DLP <strong>nem</strong> vonatkozott a Copilot használatra. Ez jelentős biztonsági rést jelentett: egy felhasználó megnyithatta a Copilotot, belemásolhatta egy Excel táblázat tartalmát (ami például ügyféladatokat tartalmazott), és a Copilot feldolgozhatta anélkül, hogy a DLP szabályzatok érvényesültek volna.</p>
+
+<p>Most ez megváltozik az november 1-től.</p>
+
+<h3>Hogyan működik DLP Copilotban?</h3>
+
+<p>A működés három rétegben zajlik:</p>
+
+<p><strong>1. Réteg - Bemenet-szűrés:</strong></p>
+<p>Amikor valaki egy parancsot ad a Copilotnak, a Purview DLP először megvizsgálja a bemeneti szöveget. Ha érzékeny információt (pl. bankszámlaszám, személyi igazolvány szám) tartalmaz, a DLP szabályzat szerint jár el:</p>
+<ul>
+  <li><strong>Blokkolás:</strong> A parancs nem kerül feldolgozásra, a felhasználó figyelmeztetést kap</li>
+  <li><strong>Figyelmeztetés:</strong> A parancs feldolgozásra kerül, de audit napló készül és admin értesítés megy ki</li>
+  <li><strong>Audit:</strong> Feldolgozás történik, csak naplózás van (nincs blokkolás vagy figyelmeztetés)</li>
+</ul>
+
+<p><strong>2. Réteg - Dokumentum hozzáférés-ellenőrzés:</strong></p>
+<p>Ha a Copilot hozzá akar férni egy dokumentumhoz (pl. "Foglald össze ezt a szerződést"), a Purview ellenőrzi, hogy a felhasználó jogosult-e hozzáférni az adott dokumentumhoz, és hogy a dokumentum tartalmaz-e védett információkat. Ha a dokumentum "Szigorúan bizalmas" címkével van ellátva, és a felhasználó nem jogosult, a Copilot nem férhet hozzá.</p>
+
+<p><strong>3. Réteg - Kimenet-szűrés:</strong></p>
+<p>A Copilot válasza is átmegy DLP ellenőrzésen. Ha a válasz érzékeny információkat tartalmazna (pl. a Copilot összefoglalóba belevette az ügyfelek email címeit), a DLP blokkolhatja a választ vagy automatikusan maszkolhatja a bizalmas részeket.</p>
+
+<h3>Példa forgatókönyv - Bankszámlaszám védelem</h3>
+
+<p>Tegyük fel, hogy van egy DLP szabályzatod, amely védi a magyar bankszámlaszámokat (IBAN formátum, HU-val kezdődik).</p>
+
+<p><strong>Forgatókönyv 1 - Közvetlen bemenet:</strong></p>
+<pre><code>Felhasználó Copilotnak: "Küldd el ezt a bankszámlaszámot az ügyfélnek: HU42117730161111101800000000"
+
+DLP válasz: ❌ BLOKKOLVA
+Üzenet a felhasználónak: "Ez a művelet megsérti a vállalati DLP szabályzatot.
+Bankszámlaszám nem osztható meg Copilot segítségével."
+</code></pre>
+
+<p><strong>Forgatókönyv 2 - Dokumentumból származó adat:</strong></p>
+<pre><code>Felhasználó: "Copilot, foglald össze ezt a számlafizetési Excel táblázatot"
+
+Copilot megvizsgálja a táblázatot → DLP észleli a bankszámlaszámokat
+DLP válasz: ⚠️ MASZKOLVA
+Copilot válasza: "A táblázat 47 tételt tartalmaz, összesen 12.4M Ft értékben.
+A bankszámlaszámok: [MASZKOLVA], [MASZKOLVA], [MASZKOLVA]..."
+</code></pre>
+
+<h3>Előre beállított DLP sablonok Copilothoz</h3>
+
+<p>A Microsoft november 1-től 12 új DLP szabályzat-sablont biztosít kifejezetten Copilot használatra. Ezek közül magyar vállalatok számára releváns sablonok:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sablon neve</th>
+      <th>Mit véd</th>
+      <th>Ajánlott beállítás</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EU Személyes adatok</td>
+      <td>Név, cím, születési dátum, személyi ig. szám</td>
+      <td>Blokkolás</td>
+    </tr>
+    <tr>
+      <td>Pénzügyi információk</td>
+      <td>Bankszámlaszám, hitelkártyaszám, IBAN</td>
+      <td>Blokkolás</td>
+    </tr>
+    <tr>
+      <td>Egészségügyi adatok</td>
+      <td>TAJ szám, orvosi dokumentumok</td>
+      <td>Blokkolás</td>
+    </tr>
+    <tr>
+      <td>Szellemi tulajdon</td>
+      <td>"Bizalmas" címkével ellátott dokumentumok</td>
+      <td>Blokkolás vagy Maszkolás</td>
+    </tr>
+    <tr>
+      <td>Forráskód védelem</td>
+      <td>Programkód bizonyos kiterjesztésekkel (.cs, .py, .java)</td>
+      <td>Figyelmeztetés</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Admin Center security controls - Új vezérlők</h2>
+
+<p>A november 1-i frissítéssel a Microsoft 365 Admin Center új "Copilot Security" szekciót kapott, amely központosítja a biztonsági beállításokat.</p>
+
+<h3>Felhasználói hozzáférés-vezérlés</h3>
+
+<p><strong>Csoportos hozzáférés-szabályozás:</strong> Most már nem csak felhasználói szinten, hanem Azure AD/Entra ID csoportok szintjén is szabályozhatod a Copilot hozzáférést.</p>
+
+<p>Példa konfiguráció:</p>
+<ul>
+  <li><strong>"Copilot-Pilot" csoport:</strong> Teljes hozzáférés minden Copilot funkcióhoz (IT, vezetőség)</li>
+  <li><strong>"Copilot-Standard" csoport:</strong> Hozzáférés Office Copilothoz (Word, Excel, PowerPoint), de Teams és Outlook Copilot letiltva</li>
+  <li><strong>"Copilot-Restricted" csoport:</strong> Csak olvasási funkciók (összefoglalás, fordítás), írási funkciók (email generálás, dokumentum készítés) letiltva</li>
+  <li><strong>Alapértelmezett:</strong> Nincs hozzáférés (opt-in modell)</li>
+</ul>
+
+<h3>Funkcionalitás-alapú korlátozások</h3>
+
+<p>Új granulált vezérlők, hogy mely Copilot funkciókat használhatják a felhasználók:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Funkció</th>
+      <th>Leírás</th>
+      <th>Ajánlott beállítás</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Web keresés</td>
+      <td>Copilot internetes keresést végezhet</td>
+      <td>Vezetőségnek: Engedélyezve<br>Általános: Letiltva</td>
+    </tr>
+    <tr>
+      <td>Plug-inek</td>
+      <td>Harmadik féltől származó Copilot bővítmények</td>
+      <td>Szigorúan kontrollált whitelist</td>
+    </tr>
+    <tr>
+      <td>Fájl feltöltés</td>
+      <td>Külső fájlok feltöltése Copilotba</td>
+      <td>Csak belső SharePoint/OneDrive</td>
+    </tr>
+    <tr>
+      <td>Kód generálás</td>
+      <td>Copilot programkódot írhat</td>
+      <td>Csak dev csapatnak engedélyezve</td>
+    </tr>
+    <tr>
+      <td>Email küldés</td>
+      <td>Copilot közvetlenül küldhet emailt</td>
+      <td>Letiltva (csak draft készítés)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Audit és megfigyelhetőség</h3>
+
+<p>Új audit naplózási szintek:</p>
+
+<ul>
+  <li><strong>Alapszintű audit:</strong> Ki, mikor, milyen Copilot funkciót használt</li>
+  <li><strong>Közepes audit:</strong> + Milyen parancsokat adott (de nem a teljes tartalom)</li>
+  <li><strong>Teljes audit:</strong> + Teljes parancs szöveg és Copilot válasz (csak compliance célokra, titkosítva tárolva)</li>
+</ul>
+
+<p><strong>Ajánlás:</strong> Kezd közepes audit szinttel, és csak akkor válts teljesre, ha szabályozói követelmény vagy biztonsági incidens miatt szükséges.</p>
+
+<h2>GPT-4.1 integráció (nem GPT-5!)</h2>
+
+<p>Sokan várták, hogy a Microsoft november 1-től GPT-5-öt integrál a Copilotba. Azonban a Microsoft a GPT-4.1 modellt választotta, és van ennek jó oka.</p>
+
+<h3>Miért GPT-4.1 és nem GPT-5?</h3>
+
+<p><strong>1. Vállalati stabilitás:</strong> A GPT-5 (megjelent 2025 augusztus 7-én) még "csak" 3 hónapos valós használattal rendelkezik. A vállalati környezetben a stabilitás fontosabb, mint a csúcstechnológia. A GPT-4.1 több mint egy éve stabil működést bizonyított.</p>
+
+<p><strong>2. Költség-hatékonyság:</strong> A GPT-5 API költsége 6x magasabb, mint a GPT-4.1-é. Egy Copilot for Microsoft 365 licenc jelenleg $30/felhasználó/hó - ha GPT-5-re váltanának, ez $90-100-ra emelkedne.</p>
+
+<p><strong>3. Válaszidő:</strong> A GPT-4.1 átlagosan 30%-kal gyorsabban válaszol, mint a GPT-5 (különösen extended reasoning mód nélkül). A Copilot felhasználói élményében a gyorsaság kritikus.</p>
+
+<p><strong>4. Microsoft customizációk:</strong> A GPT-4.1 modellt a Microsoft specifikusan finomhangolta Microsoft 365 munkaterhelésekre. A GPT-5 ilyen optimalizációja még hónapokat venne igénybe.</p>
+
+<h3>GPT-4.1 fejlesztések magyar nyelven</h3>
+
+<p>A GPT-4.1 integráció jelentős javulást hoz a magyar nyelvű használatban:</p>
+
+<ul>
+  <li><strong>35%-kal pontosabb magyar nyelvű összefoglalók:</strong> Különösen jogi és műszaki szövegek esetében</li>
+  <li><strong>Jobb helyesírás és nyelvtan:</strong> A generált magyar szövegek természetesebbek, kevesebb anglicizmus</li>
+  <li><strong>Kontextus-megértés:</strong> Magyar idiómák és kifejezések jobb értelmezése</li>
+  <li><strong>Fordítási minőség:</strong> Angol-magyar és magyar-angol fordítás 25%-kal jobb BLEU score-ral</li>
+</ul>
+
+<h2>Magyar nyelvű támogatás fejlesztések</h2>
+
+<p>A november 1-i frissítés kifejezetten fókuszált a nem-angol nyelvek támogatására, beleértve a magyart is.</p>
+
+<h3>Új magyar nyelvű funkciók</h3>
+
+<p><strong>1. Magyar nyelv prioritás Office alkalmazásokban:</strong></p>
+<p>Ha a Microsoft 365 interfész nyelve magyar, a Copilot most már automatikusan magyarul válaszol, még akkor is, ha az eredeti parancs vegyes nyelvű volt.</p>
+
+<p>Előtte:</p>
+<pre><code>Felhasználó: "Copilot, summarizáld ezt a dokumentumot"
+Copilot: "Here is a summary..." (angol válasz)
+</code></pre>
+
+<p>Most:</p>
+<pre><code>Felhasználó: "Copilot, summarizáld ezt a dokumentumot"
+Copilot: "Itt van az összefoglalás..." (magyar válasz)
+</code></pre>
+
+<p><strong>2. Magyar nyelvű sablonok:</strong></p>
+<p>18 új magyar nyelvű Copilot sablon érhető el az alábbi területeken:</p>
+<ul>
+  <li>Email válaszok magyarul</li>
+  <li>Prezentáció vázlatok</li>
+  <li>Projekt státusz jelentések</li>
+  <li>Meeting összefoglalók</li>
+  <li>Szerződés kivonatók</li>
+</ul>
+
+<p><strong>3. Helyi dátum- és pénznem-formázás:</strong></p>
+<p>A Copilot most már helyesen kezeli a magyar dátum formátumot (2025.11.04.) és a forintot (12 500 Ft).</p>
+
+<h3>Teljesítmény-optimalizációk magyar környezetben</h3>
+
+<p>A Microsoft európai adatközpontok (Amszterdam, Dublin) új AI feldolgozó kapacitást kaptak, ami különösen a kelet-európai régió számára jelent előnyt:</p>
+
+<ul>
+  <li><strong>Átlagos válaszidő:</strong> 1.8 másodperc (előtte 3.2 másodperc)</li>
+  <li><strong>Késleltetés csökkenés:</strong> 45% javulás magyar felhasználóknál</li>
+  <li><strong>Offline mód:</strong> Alapvető Copilot funkciók offline is működnek (ha egyszer cache-elve lett)</li>
+</ul>
+
+<h2>Konfigurációs útmutató lépésről lépésre</h2>
+
+<h3>1. Purview DLP szabályzat aktiválása Copilothoz</h3>
+
+<p><strong>Lépések:</strong></p>
+
+<ol>
+  <li>Lépj be a <strong>Microsoft Purview compliance portal</strong>-ra: <code>https://compliance.microsoft.com</code></li>
+  <li>Navigálj: <strong>Solutions → Data loss prevention → Policies</strong></li>
+  <li>Klikk: <strong>"+ Create policy"</strong></li>
+  <li>Válaszd: <strong>"Custom"</strong> → <strong>"Custom policy"</strong> → Next</li>
+  <li>Név: "Copilot DLP - Személyes adatok védelme"</li>
+  <li><strong>Locations</strong> szekcióban engedélyezd: <strong>"Microsoft 365 Copilot"</strong> (ÚJ opció!)</li>
+  <li>Adj hozzá feltételt: <strong>"Content contains"</strong> → <strong>"Sensitive info types"</strong> → Válaszd ki: "Hungary Personal Identification Number", "IBAN", stb.</li>
+  <li>Action: <strong>"Block"</strong></li>
+  <li>User notifications: Engedélyezd (A felhasználó értesítést kap, hogy a művelet blokkolva lett)</li>
+  <li><strong>Review and finish</strong> → <strong>"Submit"</strong></li>
+</ol>
+
+<p><strong>Tipp:</strong> Az első héten állítsd "Audit only" módra, nézd meg a naplókat, és csak akkor kapcsold blokkolásra, ha látod, hogy nem okoz hamis pozitívokat.</p>
+
+<h3>2. Admin Center Copilot biztonság konfigurálása</h3>
+
+<p><strong>Lépések:</strong></p>
+
+<ol>
+  <li>Lépj be a <strong>Microsoft 365 Admin Center</strong>-be: <code>https://admin.microsoft.com</code></li>
+  <li>Navigálj: <strong>Settings → Copilot</strong> (bal menü)</li>
+  <li>Új szekció: <strong>"Copilot Security Controls"</strong> (november 1-től)</li>
+  <li>Klikk: <strong>"Manage user access"</strong></li>
+  <li>Válts <strong>"Group-based access"</strong> módra</li>
+  <li>Add hozzá csoportokat:
+    <ul>
+      <li>Pilot csoport: Teljes hozzáférés</li>
+      <li>Standard csoport: Office apps only</li>
+      <li>Mindenki más: Letiltva</li>
+    </ul>
+  </li>
+  <li>Klikk: <strong>"Feature controls"</strong>:
+    <ul>
+      <li>Web search: OFF (alapértelmezetten)</li>
+      <li>Plugins: Whitelist mód (add meg az engedélyezett plugin-eket)</li>
+      <li>File upload: "SharePoint/OneDrive only"</li>
+    </ul>
+  </li>
+  <li><strong>Save changes</strong></li>
+</ol>
+
+<h3>3. Audit naplózás engedélyezése</h3>
+
+<p><strong>Lépések:</strong></p>
+
+<ol>
+  <li>Microsoft 365 Admin Center → <strong>Audit</strong> (keresőben)</li>
+  <li>Engedélyezd: <strong>"Unified audit log"</strong> (ha még nincs)</li>
+  <li>Purview compliance portal → <strong>Audit</strong></li>
+  <li><strong>"Audit retention policies"</strong> → <strong>"New audit retention policy"</strong></li>
+  <li>Név: "Copilot Audit - 1 year"</li>
+  <li>Record type: <strong>"Microsoft365CopilotActivity"</strong> (ÚJ!)</li>
+  <li>Retention: 365 nap</li>
+  <li><strong>Create</strong></li>
+</ol>
+
+<h3>4. Tesztelés és validáció</h3>
+
+<p><strong>DLP teszt:</strong></p>
+<ol>
+  <li>Nyiss egy Word dokumentumot</li>
+  <li>Indítsd el a Copilotot</li>
+  <li>Próbálj meg egy parancsot adni, ami tartalmaz védett adatot (pl. "Küldd el ezt: HU42...bankszámlaszám")</li>
+  <li>Ellenőrizd, hogy blokkolva lett-e és kaptál-e értesítést</li>
+</ol>
+
+<p><strong>Access control teszt:</strong></p>
+<ol>
+  <li>Jelentkezz be egy korlátozott csoportba tartozó felhasználóval</li>
+  <li>Próbáld meg elérni a Teams Copilotot (ha letiltottad)</li>
+  <li>Ellenőrizd, hogy hibát kapsz-e vagy nem látod az opciót</li>
+</ol>
+
+<h2>További források</h2>
+
+<ul>
+  <li><a href="https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-privacy">Microsoft 365 Copilot Privacy - Hivatalos dokumentáció</a></li>
+  <li><a href="https://learn.microsoft.com/en-us/purview/dlp-microsoft-365-copilot">Purview DLP for Copilot - Technikai útmutató</a></li>
+  <li><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot/bg-p/Microsoft365Copilot">Microsoft 365 Copilot Tech Community</a></li>
+  <li><a href="https://compliance.microsoft.com">Microsoft Purview Compliance Portal</a></li>
+  <li><a href="https://admin.microsoft.com">Microsoft 365 Admin Center</a></li>
+</ul>
