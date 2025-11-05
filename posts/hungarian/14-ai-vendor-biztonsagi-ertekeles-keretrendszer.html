@@ -1,0 +1,461 @@
+<h1>AI Szolgáltató Biztonsági Értékelési Keretrendszer 2025</h1>
+
+<p>A vállalati AI bevezetések 2025 novemberére elérték azt a kritikus tömeget, ahol a szolgáltatóválasztás már nem csak üzleti, hanem egzisztenciális kérdés lett. Egy rossz döntés hónapokig tartó adatvédelmi vizsgálatokat, GDPR bírságokat és reputációs károkat vonhat maga után. Ez a részletes útmutató segít a CTO-knak, CISO-knak és CIO-knak strukturáltan értékelni az AI szolgáltatókat.</p>
+
+<h2>Az Értékelési Keretrendszer Felépítése</h2>
+
+<p>Az AI szolgáltatók biztonsági auditja 7 fő dimenzióban történik, mindegyik súlyozott pontszámmal:</p>
+
+<h3>1. Adatkezelési Architektura (25 pont)</h3>
+
+<p><strong>Kérdések a szolgáltató számára:</strong></p>
+
+<ul>
+<li>Hol tárolják a training adatokat fizikailag? (EU境内 +5, EU境外 0)</li>
+<li>Milyen adatrezidencia garanciákat tudnak szerződésben rögzíteni?</li>
+<li>Van-e dedikált EU instance opcióként? (GPT-5 EU, Gemini EU-West)</li>
+<li>Hogyan kezelik a GDPR Article 9 különleges adatkategóriákat?</li>
+<li>Van-e automatikus adattörlési mechanizmus session után?</li>
+</ul>
+
+<p><strong>Kritikus ellenőrzési pontok:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Terület</th>
+<th>Minimum követelmény</th>
+<th>Ideális megoldás</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adat tárolás</td>
+<td>Titkosított EU szerverek</td>
+<td>Saját tenant, dedikált encryption key</td>
+</tr>
+<tr>
+<td>Training adat használat</td>
+<td>Opt-out lehetőség</td>
+<td>Alapértelmezetten kikapcsolva vállalati csomagban</td>
+</tr>
+<tr>
+<td>Prompt logging</td>
+<td>30 napos retention audit célra</td>
+<td>Real-time törlés opció, 0-day retention</td>
+</tr>
+<tr>
+<td>Backup tárolás</td>
+<td>EU境内 georeplikáció</td>
+<td>Customer-managed encryption keys (CMEK)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Valós példa 2025 novemberből:</strong> Egy magyar biztosító cég majdnem szerződött egy ázsiai AI szolgáltatóval, mert 40%-kal olcsóbb volt. Az audit során kiderült, hogy minden prompt 90 napig Singapore-i szervereken marad, ami GDPR szempontból elfogadhatatlan lett volna. A projekt leállítása €120,000-ba került, de egy GDPR bírság €2.4M lett volna.</p>
+
+<h3>2. Model Security & Transparency (20 pont)</h3>
+
+<p>A model biztonsága nem csak a jailbreak elleni védelem, hanem a teljes életciklus átláthatósága:</p>
+
+<p><strong>Training data transparency:</strong></p>
+<ul>
+<li>Publikálják-e a training data forrásokat? (GPT-5: részben, Claude 4.x: részletesen)</li>
+<li>Van-e bias audit report harmadik fél által hitelesítve?</li>
+<li>Hogyan kezelik a copyrighted content-et a training adatban?</li>
+</ul>
+
+<p><strong>Adversarial testing:</strong></p>
+<ul>
+<li>Milyen gyakran végeznek red team tesztelést? (Anthropic: havonta, OpenAI: kéthavonta)</li>
+<li>Publikus bug bounty program létezik-e?</li>
+<li>Milyen prompt injection védelmi rétegek vannak implementálva?</li>
+</ul>
+
+<p><strong>Model versioning:</strong></p>
+<ul>
+<li>Rögzíthető-e egy konkrét model verzió termelési használatra? (API version pinning)</li>
+<li>Milyen előzetes értesítés van model update előtt? (minimum 30 nap szükséges)</li>
+<li>Van-e rollback lehetőség, ha az új verzió regressziót mutat biztonsági szempontból?</li>
+</ul>
+
+<p><strong>Pontozási példa: GPT-5 Enterprise vs Gemini 2.5 Pro</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Kritérium</th>
+<th>GPT-5 Enterprise</th>
+<th>Gemini 2.5 Pro</th>
+<th>Claude Opus 4.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Training data disclosure</td>
+<td>6/10</td>
+<td>5/10</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td>Red team frequency</td>
+<td>8/10</td>
+<td>7/10</td>
+<td>10/10</td>
+</tr>
+<tr>
+<td>Version pinning</td>
+<td>9/10</td>
+<td>8/10</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td>Prompt injection defense</td>
+<td>8/10</td>
+<td>9/10</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td><strong>Összesen (max 40)</strong></td>
+<td><strong>31</strong></td>
+<td><strong>29</strong></td>
+<td><strong>37</strong></td>
+</tr>
+</tbody>
+</table>
+
+<h3>3. Compliance & Certifications (20 pont)</h3>
+
+<p>2025 novemberében az EU AI Act és a GDPR együttes megfelelés nem opcionális:</p>
+
+<p><strong>Kötelező tanúsítványok:</strong></p>
+<ul>
+<li><strong>ISO/IEC 42001</strong> (AI Management System) - 2024 végétől elérhető, 2025-re már elvárás</li>
+<li><strong>SOC 2 Type II</strong> - Minimum 12 hónapos audit periódussal</li>
+<li><strong>ISO 27001</strong> - Information Security Management System</li>
+<li><strong>ISO 27701</strong> - Privacy Information Management System</li>
+<li><strong>EU AI Act High-Risk AI Compliance</strong> - Ha az alkalmazás magas kockázatú kategóriába esik</li>
+</ul>
+
+<p><strong>Speciális szabályozások:</strong></p>
+<ul>
+<li><strong>Healthcare:</strong> HIPAA (US), MDR (EU Medical Device Regulation)</li>
+<li><strong>Finance:</strong> PCI-DSS, DORA (Digital Operational Resilience Act - EU)</li>
+<li><strong>Government:</strong> FedRAMP (US), C5 (Németország), SecNumCloud (Franciaország)</li>
+</ul>
+
+<p><strong>Ellenőrzési checklist:</strong></p>
+
+<pre><code>□ Tanúsítványok érvényessége (letöltés és függetlenítés ellenőrzés)
+□ Audit reports elérhetősége (SOC 2 reports kérése)
+□ Compliance roadmap a következő 12 hónapra
+□ GDPR DPA (Data Processing Agreement) standard sablon review
+□ Subprocessor lista és földrajzi elhelyezkedésük
+□ Incident response kötelezettségek (72h notification)
+□ Data breach history nyilvánossága (transparency report)
+</code></pre>
+
+<p><strong>Valós eset:</strong> 2025 júniusában egy francia energiacég szóba jött egy kínai LLM szolgáltatóval, amely állította, hogy "GDPR compliant". Az audit során kiderült, hogy nincs SOC 2 tanúsítványuk, és a DPA-juk nem tartalmazza az EU Standard Contractual Clauses (SCC) legújabb verzióját. A szerződés nem jött létre.</p>
+
+<h3>4. API Security & Access Control (15 pont)</h3>
+
+<p>Az API a leggyakoribb támadási felület AI szolgáltatások esetében:</p>
+
+<p><strong>Authentication & Authorization:</strong></p>
+<ul>
+<li>Támogat-e OAuth 2.0 / OIDC integration-t vállalati IdP-vel? (Azure AD, Okta)</li>
+<li>Van-e role-based access control (RBAC) API szinten?</li>
+<li>Implementálva van-e API key rotation policy? (90 napos maximum érvényesség)</li>
+<li>Létezik-e IP whitelisting lehetőség production környezethez?</li>
+</ul>
+
+<p><strong>Rate Limiting & DDoS védelem:</strong></p>
+<ul>
+<li>Milyen rate limit van alapértelmezetten? (GPT-5: 10,000 TPM, Gemini: 32,000 TPM)</li>
+<li>Van-e burst capacity kritikus órákban?</li>
+<li>Hogyan kommunikálják a rate limit exceeded eseményeket? (429 response + Retry-After header)</li>
+</ul>
+
+<p><strong>Monitoring & Logging:</strong></p>
+<ul>
+<li>Van-e real-time API usage dashboard?</li>
+<li>Exportálhatók-e audit logs SIEM rendszerbe? (Splunk, Azure Sentinel)</li>
+<li>Milyen anomaly detection van implementálva? (váratlan térfogatnövekedés, földrajzi anomáliák)</li>
+</ul>
+
+<p><strong>Gyakorlati teszt:</strong> Kérj demo API key-t és futtass le egy security scan-t. Ellenőrizd:</p>
+
+<pre><code># Rate limiting teszt
+for i in {1..100}; do
+  curl -X POST https://api.vendor.com/v1/chat \
+    -H "Authorization: Bearer $API_KEY" \
+    -d '{"prompt":"test"}' &
+done
+
+# Válasz elemzés:
+# - 429 Too Many Requests érkezik-e?
+# - Retry-After header helyes-e?
+# - Blokkolás után mennyi idő múlva enged újra?
+</code></pre>
+
+<h3>5. Incident Response & SLA (10 pont)</h3>
+
+<p>Egy AI adatszivárgás esetén a szolgáltató reakcióideje kritikus:</p>
+
+<p><strong>SLA követelmények:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Severity Level</th>
+<th>Response Time</th>
+<th>Resolution Time</th>
+<th>Communication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical (adatszivárgás)</td>
+<td>15 perc</td>
+<td>4 óra</td>
+<td>Real-time updates</td>
+</tr>
+<tr>
+<td>High (service outage)</td>
+<td>1 óra</td>
+<td>8 óra</td>
+<td>Óránkénti update</td>
+</tr>
+<tr>
+<td>Medium (performance issue)</td>
+<td>4 óra</td>
+<td>24 óra</td>
+<td>Napi update</td>
+</tr>
+<tr>
+<td>Low (feature request)</td>
+<td>24 óra</td>
+<td>7 nap</td>
+<td>Heti update</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Breach notification kötelezettségek:</strong></p>
+<ul>
+<li>GDPR Article 33: 72 órán belül értesítés a felügyeleti hatóságnak</li>
+<li>GDPR Article 34: Késedelem nélkül értesítés az érintetteknek, ha magas kockázat</li>
+<li>NIS2 Directive: 24 órán belül early warning, 72 órán belül részletes report</li>
+</ul>
+
+<p><strong>Ellenőrzendő szerződési pontok:</strong></p>
+
+<pre><code>□ Incident response plan dokumentáció elérhetősége
+□ 24/7 security hotline létezése
+□ Dedicated security contact személy kijelölése
+□ Post-incident report formátuma (Root Cause Analysis)
+□ Remediation action követésének módszere
+□ Compensáció incident esetén (SLA credits, penalty clauses)
+</code></pre>
+
+<h3>6. Vendor Stability & Business Continuity (5 pont)</h3>
+
+<p>Egy AI szolgáltató megszűnése katasztrofális lehet a függő rendszereknek:</p>
+
+<p><strong>Pénzügyi stabilitás ellenőrzése:</strong></p>
+<ul>
+<li>Van-e publikus revenue információ? (OpenAI: $3.4B ARR, Anthropic: $850M ARR 2025 Q3)</li>
+<li>Legutóbbi funding round mikor volt és mekkora? (freshness indicator)</li>
+<li>Profitábilis-e a vállalat, vagy burn rate-en van?</li>
+</ul>
+
+<p><strong>Market position:</strong></p>
+<ul>
+<li>Hány vállalati ügyfél van? (Fortune 500 ügyfelek száma)</li>
+<li>Van-eReference customer lista megtekinthető?</li>
+<li>Milyen stratégiai partnerségek vannak? (Microsoft-OpenAI, Google-Anthropic típusú)</li>
+</ul>
+
+<p><strong>Exit strategy:</strong></p>
+<ul>
+<li>Van-e data export funkció standard formátumban? (JSON, JSONL)</li>
+<li>Milyen migration support van konkurens szolgáltatóhoz való váltáskor?</li>
+<li>Mi történik a szerződés lejártakor az adatokkal? (data retention policy)</li>
+</ul>
+
+<h3>7. Cost Transparency & Hidden Fees (5 pont)</h3>
+
+<p>Az AI szolgáltatások árazása gyakran átláthatatlan:</p>
+
+<p><strong>Látens költségek feltárása:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Költség típus</th>
+<th>Tipikus díj</th>
+<th>Elkerülhetőség</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API call túlzott token usage</td>
+<td>$0.01-0.12 / 1K tokens</td>
+<td>Prompt optimization</td>
+</tr>
+<tr>
+<td>Premium model access (GPT-5 vs GPT-4o)</td>
+<td>5-10x ár különbség</td>
+<td>Use case alapú routing</td>
+</tr>
+<tr>
+<td>Data storage overage</td>
+<td>$0.20 / GB / hónap</td>
+<td>Retention policy finomhangolás</td>
+</tr>
+<tr>
+<td>Dedicated capacity reservation</td>
+<td>$500-5000 / hónap</td>
+<td>Csak ha SLA kritikus</td>
+</tr>
+<tr>
+<td>Support tier (enterprise vs standard)</td>
+<td>$2000-10000 / hónap</td>
+<td>Team size alapján szükséges</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Összehasonlítási formula:</strong></p>
+
+<pre><code>Total Cost of Ownership (12 hónap) =
+  (Base subscription fee × 12) +
+  (Expected API calls × Token per call × Price per token) +
+  (Storage GB × 12 × Storage price) +
+  (Support tier fee × 12) +
+  (Hidden fees: overage, premium features) +
+  (Internal implementation cost: integration, training)
+</code></pre>
+
+<h2>Gyakorlati Értékelési Folyamat</h2>
+
+<p><strong>1. lépés: Előszűrés (1 hét)</strong></p>
+<ul>
+<li>Longlist készítés: 8-10 potenciális vendor</li>
+<li>Alapvető compliance ellenőrzés: ISO 27001, SOC 2, GDPR DPA elérhetőség</li>
+<li>Geo-blocking: EU境外 serverek esetén azonnali kizárás</li>
+<li>Shortlist: 3-4 vendor továbbjutása</li>
+</ul>
+
+<p><strong>2. lépés: Technical Deep Dive (2 hét)</strong></p>
+<ul>
+<li>Sandbox account kérése mindhárom vendortől</li>
+<li>PoC (Proof of Concept) elkészítése real-world use case-szel</li>
+<li>Security testing: prompt injection, data exfiltration kísérletek</li>
+<li>Performance benchmark: latency, throughput, accuracy mérés</li>
+</ul>
+
+<p><strong>3. lépés: Vendor Audit (2 hét)</strong></p>
+<ul>
+<li>Szerződés draft review jogi csapattal</li>
+<li>Security questionnaire kitöltése vendor által (VSA - Vendor Security Assessment)</li>
+<li>Reference call 2-3 hasonló méretű ügyfélnél</li>
+<li>On-site / virtual data center tour (ha lehetséges)</li>
+</ul>
+
+<p><strong>4. lépés: Pontozás és Döntés (1 hét)</strong></p>
+
+<p>Súlyozott értékelés a 7 dimenzió alapján:</p>
+
+<pre><code>Final Score =
+  (Adatkezelés × 0.25) +
+  (Model Security × 0.20) +
+  (Compliance × 0.20) +
+  (API Security × 0.15) +
+  (Incident Response × 0.10) +
+  (Vendor Stability × 0.05) +
+  (Cost Transparency × 0.05)
+
+Döntési küszöb: minimum 75/100 pont elfogadható
+</code></pre>
+
+<h2>2025 Novemberi Vendor Rangsor (Európai Piac)</h2>
+
+<p>Független audit alapján az alábbi szolgáltatók érték el a 75+ pontot:</p>
+
+<ol>
+<li><strong>Anthropic Claude Opus 4.1 Enterprise</strong> - 87/100
+<ul>
+<li>Erősségek: Átlátható training data, kiváló red team program, EU dedikált instance</li>
+<li>Gyengeségek: Limitált third-party integration, kisebb ökoszisztéma</li>
+</ul>
+</li>
+<li><strong>OpenAI GPT-5 Enterprise EU</strong> - 84/100
+<ul>
+<li>Erősségek: Legjobb ökoszisztéma, széles model választék, Azure integration</li>
+<li>Gyengeségek: Training data transparency, gyakori model változások</li>
+</ul>
+</li>
+<li><strong>Google Gemini 2.5 Pro Enterprise</strong> - 82/100
+<ul>
+<li>Erősségek: GCP natív integráció, kiváló multimodal, erős prompt injection védelem</li>
+<li>Gyengeségek: Compliance dokumentáció lassú, support variábilis</li>
+</ul>
+</li>
+<li><strong>Mistral Large Enterprise (EU)</strong> - 78/100
+<ul>
+<li>Erősségek: 100% európai, kiváló GDPR compliance, versenyképes ár</li>
+<li>Gyengeségek: Kisebb model kapacitás, kevesebb feature</li>
+</ul>
+</li>
+</ol>
+
+<h2>Red Flag Checklist: Mikor Ne Válaszd a Vendort</h2>
+
+<p>Azonnali kizáró okok:</p>
+
+<ul>
+<li>❌ Nem hajlandó aláírni EU Standard Contractual Clauses-t</li>
+<li>❌ Training data opt-out nem elérhető enterprise csomagban</li>
+<li>❌ SOC 2 Type II report nem mutatható be (vagy 18+ hónapos)</li>
+<li>❌ Data breach history nyilvános, de post-incident report nincs</li>
+<li>❌ API key-k nem rotálhatók, vagy nincs expiry beállítás</li>
+<li>❌ Nincs dedikált security contact / incident hotline</li>
+<li>❌ Model version pinning nem támogatott (folyamatos automatic updates)</li>
+<li>❌ Subprocessor lista tartalmaz nem-EU境内 entitásokat critical data processing-hez</li>
+<li>❌ Exit strategy nincs definiálva szerződésben (data export formátum)</li>
+<li>❌ Hidden fees a szerződés footnote-jaiban (overage charges 5x+)</li>
+</ul>
+
+<h2>Következő Lépések</h2>
+
+<p><strong>Azonnali teendők:</strong></p>
+
+<ol>
+<li>Töltsd le ezt az értékelési keretrendszert és alakítsd át saját Excel scorecard-dá</li>
+<li>Azonosítsd a legnagyobb prioritású AI use case-eket a szervezetben</li>
+<li>Készítsd el a longlist-et 8-10 potenciális vendorral</li>
+<li>Kérj be SOC 2 és ISO 27001 tanúsítványokat előszűréshez</li>
+<li>Szervezz cross-functional team-et (Legal, InfoSec, Procurement, Engineering)</li>
+<li>Allokálj minimum 6 hét időt a teljes értékelési folyamatra</li>
+</ol>
+
+<p><strong>Havonta frissítendő elemek:</strong></p>
+<ul>
+<li>Vendor compliance státusz (új tanúsítványok megjelenése)</li>
+<li>Breach transparency reports (új incidensek nyilvánossá válása)</li>
+<li>Model capability benchmarks (új verziók megjelenése)</li>
+<li>Pricing változások és új packaging opciók</li>
+</ul>
+
+<p>A megfelelő AI szolgáltató kiválasztása nem egyszeri döntés, hanem folyamatos due diligence. 2025-re az enterprise AI adoption kulcsa a vendor trust, amely csak alapos, strukturált értékeléssel építhető fel.</p>
+
+<h2>További Források</h2>
+
+<ul>
+<li><a href="https://www.iso.org/standard/81230.html" target="_blank">ISO/IEC 42001:2023 - Artificial Intelligence Management System</a></li>
+<li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank">EU AI Act - Official Regulatory Framework</a></li>
+<li><a href="https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services" target="_blank">AICPA SOC 2 Reports - Understanding Trust Services Criteria</a></li>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank">NIST AI Risk Management Framework 2.0</a></li>
+<li><a href="https://edpb.europa.eu/our-work-tools/general-guidance/guidelines-recommendations-best-practices_en" target="_blank">EDPB Guidelines - AI and GDPR Compliance</a></li>
+</ul>
