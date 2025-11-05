@@ -1,0 +1,790 @@
+<h1>CISO AI Security Roadmap 2025-2026</h1>
+
+<p>By November 2025, AI security is no longer a future concern—it's daily operational reality. The challenge facing CISOs: how to build a comprehensive AI security strategy over a 12-18 month timeline while AI technology evolves faster than defense mechanisms. This detailed roadmap provides practical steps, timelines, and cost estimates.</p>
+
+<h2>Starting Point: Current State Assessment (Month 0)</h2>
+
+<h3>AI Discovery Audit</h3>
+
+<p>In the first 30 days, the most critical task is mapping invisible AI usage:</p>
+
+<p><strong>Shadow AI Discovery methods:</strong></p>
+
+<ul>
+<li><strong>Network traffic analysis:</strong> Identify traffic to OpenAI, Anthropic, Google AI API endpoints</li>
+<li><strong>Browser extension scan:</strong> Check for ChatGPT, Claude, Copilot browser plugins on corporate devices</li>
+<li><strong>Cloud cost anomaly:</strong> Analyze Azure OpenAI, AWS Bedrock, Google Vertex AI spending</li>
+<li><strong>Code repository scan:</strong> Search GitHub, GitLab for AI API keys and hardcoded credentials</li>
+<li><strong>Employee survey:</strong> Anonymous questionnaire about AI tool usage (provides realistic adoption picture)</li>
+</ul>
+
+<p><strong>Expected results:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Company size</th>
+<th>Average shadow AI tools</th>
+<th>% Employees using AI</th>
+<th>Spend / month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50-200 employees</td>
+<td>12-18</td>
+<td>35-45%</td>
+<td>€2,000-5,000</td>
+</tr>
+<tr>
+<td>200-1000 employees</td>
+<td>25-40</td>
+<td>50-65%</td>
+<td>€8,000-25,000</td>
+</tr>
+<tr>
+<td>1000-5000 employees</td>
+<td>60-120</td>
+<td>65-80%</td>
+<td>€40,000-150,000</td>
+</tr>
+<tr>
+<td>5000+ employees</td>
+<td>150-300+</td>
+<td>75-90%</td>
+<td>€200,000-1,000,000+</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Risk classification:</strong> Categorize every discovered AI usage:</p>
+
+<pre><code>CRITICAL: Trade secrets, personal data, source code in public AI
+HIGH: Internal documents, email content processing
+MEDIUM: General productivity tasks (translation, summarization)
+LOW: Public information processing, brainstorming
+</code></pre>
+
+<h3>Baseline Security Posture</h3>
+
+<p>Measure current maturity level across 5 dimensions (1-5 scale):</p>
+
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Level 1 (Initial)</th>
+<th>Level 3 (Managed)</th>
+<th>Level 5 (Optimized)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy & Governance</td>
+<td>No AI policy</td>
+<td>Draft policy exists</td>
+<td>Enforced policy + audit trail</td>
+</tr>
+<tr>
+<td>Technical Controls</td>
+<td>No monitoring</td>
+<td>Basic DLP rules</td>
+<td>AI-specific DLP + prompt filtering</td>
+</tr>
+<tr>
+<td>Awareness Training</td>
+<td>No AI training</td>
+<td>One-time training</td>
+<td>Quarterly training + phishing simulation</td>
+</tr>
+<tr>
+<td>Vendor Management</td>
+<td>Ad-hoc procurement</td>
+<td>Approved vendor list</td>
+<td>Continuous vendor assessment</td>
+</tr>
+<tr>
+<td>Incident Response</td>
+<td>No AI-specific playbook</td>
+<td>Basic runbook exists</td>
+<td>Tested playbook + quarterly drill</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Real example:</strong> An 800-employee Hungarian tech company conducted its first AI discovery audit in August 2025. Results: 43 different AI tools in use, 18 unknown to IT. Found 7 critical risk cases (source code uploaded to ChatGPT). The audit cost €15,000 but prevented €2.4M in potential data breach costs.</p>
+
+<h2>Months 1-3: Quick Wins and Foundational Defense</h2>
+
+<h3>Quick Wins (Month 1)</h3>
+
+<p><strong>Immediately implementable controls:</strong></p>
+
+<ol>
+<li>
+<p><strong>Browser-level blocking:</strong> Block all public AI domains on corporate network</p>
+<pre><code>Blocked domains list:
+- chat.openai.com (unless enterprise license exists)
+- claude.ai (free tier)
+- gemini.google.com (free tier)
+- you.com, perplexity.ai, poe.com
+- character.ai, replika.ai (personal AI)
+
+Cost: €0 (use existing web filter)
+Implementation time: 2 hours
+Impact: 60-70% immediate shadow AI usage shutdown
+</code></pre>
+</li>
+<li>
+<p><strong>Interim AI Usage Policy:</strong> 1-page directive immediately distributed</p>
+<pre><code>Content:
+✓ Public AI tool prohibition with sensitive data
+✓ Approved corporate AI tools list
+✓ Reporting mechanism for AI security incidents
+✓ Consequence management (disciplinary procedure rules)
+
+Audience: All employees
+Format: Email + intranet banner + Slack/Teams announcement
+</code></pre>
+</li>
+<li>
+<p><strong>API Key Rotation:</strong> Immediately replace all discovered API keys</p>
+<ul>
+<li>GitHub secrets scan (TruffleHog, GitGuardian)</li>
+<li>Slack, email archive search for "sk-" pattern (OpenAI keys)</li>
+<li>Cloud secret manager audit (AWS Secrets Manager, Azure Key Vault)</li>
+</ul>
+</li>
+</ol>
+
+<h3>Foundational Security Controls (Months 2-3)</h3>
+
+<p><strong>1. DLP (Data Loss Prevention) rules for AI:</strong></p>
+
+<pre><code>Rule 1: Block sensitive data categories
+- GDPR Article 9 data (health, biometric, racial origin)
+- PCI-DSS data (card numbers, CVV)
+- PII (social security numbers, addresses, phone numbers)
+- Corporate confidentiality labels (Confidential, Internal Use Only)
+
+Rule 2: Prevent bulk data uploads
+- 10+ email addresses at once
+- 50+ rows of CSV/Excel data
+- Full document copy-paste (5000+ characters)
+
+Rule 3: Source code protection
+- .py, .js, .java, .cpp file extensions
+- Git commit hash patterns
+- API endpoint URLs (https://api.company.com/*)
+
+Implementation: Microsoft Purview DLP, Symantec DLP, Forcepoint DLP
+Cost: €15,000-50,000 (license + implementation)
+Time required: 4-6 weeks
+</code></pre>
+
+<p><strong>2. Corporate AI platform selection and launch:</strong></p>
+
+<p>Choose 1-2 approved vendors and launch with enterprise contracts:</p>
+
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Recommended Tool</th>
+<th>Cost (500 users)</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General productivity</td>
+<td>Microsoft 365 Copilot</td>
+<td>€15,000/month</td>
+<td>2 weeks</td>
+</tr>
+<tr>
+<td>Developer tools</td>
+<td>GitHub Copilot Enterprise</td>
+<td>€19,500/month</td>
+<td>1 week</td>
+</tr>
+<tr>
+<td>Custom AI apps</td>
+<td>Azure OpenAI Service</td>
+<td>Consumption-based</td>
+<td>4-6 weeks</td>
+</tr>
+<tr>
+<td>Data analysis</td>
+<td>Google Gemini Enterprise</td>
+<td>€12,000/month</td>
+<td>3 weeks</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Launch strategy:</strong></p>
+<ul>
+<li>Pilot phase: 50-100 selected early adopters (1 month)</li>
+<li>Feedback collection and policy refinement</li>
+<li>General availability: entire company (phased rollout by department)</li>
+<li>Communication: "Blocking isn't punishment, providing secure alternatives is the goal"</li>
+</ul>
+
+<h3>Security Awareness Campaign Launch (Month 3)</h3>
+
+<p><strong>Mandatory training program structure:</strong></p>
+
+<ol>
+<li>
+<p><strong>30-minute online module:</strong> "AI Security Basics for Everyone"</p>
+<ul>
+<li>What is prompt injection? (with practical examples)</li>
+<li>Why is public AI usage dangerous with corporate data?</li>
+<li>How to use approved tools securely?</li>
+<li>How to report AI security incidents?</li>
+</ul>
+</li>
+<li>
+<p><strong>Role-specific training (60 minutes):</strong></p>
+<ul>
+<li><strong>Developers:</strong> Secure coding with AI assistants, code review process</li>
+<li><strong>Marketing:</strong> Brand safety, generated content review</li>
+<li><strong>HR:</strong> Recruitment AI bias, candidate data protection</li>
+<li><strong>Finance:</strong> Fraudulent AI-generated invoices, deepfake CEO attacks</li>
+</ul>
+</li>
+<li>
+<p><strong>Quarterly simulations:</strong> Phishing emails with AI-generated content</p>
+<ul>
+<li>Baseline click rate: 15-25%</li>
+<li>Target: Below 5% after 12 months</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>Costs:</strong></p>
+<ul>
+<li>Training platform license (KnowBe4, Proofpoint): €8,000-20,000/year</li>
+<li>Content development: €15,000 (custom, company-specific modules)</li>
+<li>Internal trainer time: 40 hours (€4,000 opportunity cost)</li>
+</ul>
+
+<h2>Months 4-6: Defense in Depth and Automation</h2>
+
+<h3>Advanced Monitoring & Detection</h3>
+
+<p><strong>1. AI Usage Analytics Platform implementation:</strong></p>
+
+<p>Deploy a central monitoring tool providing real-time visibility:</p>
+
+<p><strong>Key features:</strong></p>
+<ul>
+<li>API call volume tracking to all vendors</li>
+<li>Token consumption analysis (cost monitoring)</li>
+<li>Anomaly detection (unexpected volume spikes, unusual hours)</li>
+<li>Data classification enforcement (block when sensitive data flagged)</li>
+<li>User behavior analytics (who uses AI frequently, for what?)</li>
+</ul>
+
+<p><strong>Tool options:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Solution</th>
+<th>Deployment</th>
+<th>Cost (500 users)</th>
+<th>Feature completeness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft Defender for Cloud Apps (CASB)</td>
+<td>SaaS</td>
+<td>€7,500/month</td>
+<td>8/10</td>
+</tr>
+<tr>
+<td>Netskope Intelligent SSE</td>
+<td>SaaS</td>
+<td>€12,000/month</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td>Zscaler AI Security</td>
+<td>SaaS</td>
+<td>€10,000/month</td>
+<td>8/10</td>
+</tr>
+<tr>
+<td>Custom build (SIEM + APIs)</td>
+<td>Self-hosted</td>
+<td>€50,000 setup</td>
+<td>6/10 (custom)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>2. Prompt Injection Detection solution:</strong></p>
+
+<p>Implement a layer that filters prompts in real-time:</p>
+
+<pre><code>Architecture:
+User → Prompt Filter → AI Model → Response Filter → User
+
+Prompt Filter rules:
+✓ Jailbreak pattern detection (regex + ML model)
+✓ PII masking (email, phone number automatic redaction)
+✓ Sensitive keyword blocking (company name + "confidential")
+✓ Excessive privilege requests ("ignore previous instructions")
+
+Technology options:
+- Lakera Guard (API-based SaaS): $0.001 per prompt
+- Robust Intelligence AI Firewall: $15,000/month flat fee
+- Custom BERT-based classifier: €80,000 development
+</code></pre>
+
+<h3>Governance & Policy Maturation</h3>
+
+<p><strong>Comprehensive AI Governance Framework:</strong></p>
+
+<p>Replace the 2-page interim policy with a comprehensive 30-40 page document:</p>
+
+<ol>
+<li><strong>AI Acceptable Use Policy (AUP)</strong>
+<ul>
+<li>Permitted use cases list</li>
+<li>Prohibited uses (automated HR decisions without audit)</li>
+<li>Data classification matrix (what data can go into which AI)</li>
+</ul>
+</li>
+<li><strong>AI Procurement Policy</strong>
+<ul>
+<li>Vendor assessment checklist</li>
+<li>Mandatory security requirements (SOC 2, ISO 27001, GDPR DPA)</li>
+<li>Approval workflow (who can authorize new AI tool procurement?)</li>
+</ul>
+</li>
+<li><strong>AI Development Lifecycle Policy</strong>
+<ul>
+<li>Secure coding guidelines with AI assistants</li>
+<li>Model training data governance (who approves training set?)</li>
+<li>Pre-production security testing requirements</li>
+</ul>
+</li>
+<li><strong>AI Incident Response Playbook</strong>
+<ul>
+<li>Scenario 1: Data breach in public AI (source code leak)</li>
+<li>Scenario 2: Jailbreak exploit in production AI</li>
+<li>Scenario 3: Deepfake CEO fraud attempt</li>
+<li>Scenario 4: Model poisoning in training data</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>AI Governance Committee establishment:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Participant</th>
+<th>Responsibility</th>
+<th>Time allocation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chair</td>
+<td>CISO</td>
+<td>Strategy, escalation, board reporting</td>
+<td>10h/month</td>
+</tr>
+<tr>
+<td>Co-Chair</td>
+<td>CTO / Chief AI Officer</td>
+<td>Technical decisions, roadmap</td>
+<td>8h/month</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Legal Counsel</td>
+<td>Compliance, contracts</td>
+<td>6h/month</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Privacy Officer (DPO)</td>
+<td>GDPR, data protection</td>
+<td>6h/month</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>HR Lead</td>
+<td>Workforce impact, training</td>
+<td>4h/month</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Product Management</td>
+<td>Use case prioritization</td>
+<td>4h/month</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Monthly meeting agenda:</strong></p>
+<pre><code>1. AI usage metrics review (adoption, incidents, costs)
+2. New AI tool requests assessment (approve/reject/defer)
+3. Policy violation review and consequence management
+4. Threat intelligence update (new attack vectors)
+5. Compliance status (EU AI Act, GDPR audits)
+</code></pre>
+
+<h2>Months 7-9: Offensive Security and Compliance</h2>
+
+<h3>Red Team & Penetration Testing</h3>
+
+<p><strong>Launch AI-specific pentesting program:</strong></p>
+
+<p><strong>Internal red team (if capacity exists):</strong></p>
+<ul>
+<li>1-2 days monthly dedicated AI security testing</li>
+<li>Targets: own AI applications, approved vendor tools</li>
+<li>Test types: prompt injection, data exfiltration, jailbreak attempts</li>
+</ul>
+
+<p><strong>External pentest (quarterly):</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Vendor examples</th>
+<th>Cost</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI API security</td>
+<td>Bishop Fox, NCC Group</td>
+<td>€25,000-40,000</td>
+<td>2 weeks</td>
+</tr>
+<tr>
+<td>ML model robustness</td>
+<td>Trail of Bits, HiddenLayer</td>
+<td>€30,000-50,000</td>
+<td>3 weeks</td>
+</tr>
+<tr>
+<td>Full application pentest</td>
+<td>Cure53, Securitum</td>
+<td>€40,000-70,000</td>
+<td>4 weeks</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Bug Bounty Program launch:</strong></p>
+
+<p>If you have public-facing AI features, launch a bug bounty program:</p>
+
+<pre><code>Platform: HackerOne, Bugcrowd, Intigriti
+Scope: AI prompt endpoints, model inference APIs
+Payout range:
+- Critical (RCE, data breach): €5,000-25,000
+- High (prompt injection, PII leak): €1,000-5,000
+- Medium (DoS, rate limit bypass): €500-1,000
+- Low (info disclosure): €100-500
+
+First 6 months cost: €50,000-100,000 (payout + platform fee)
+</code></pre>
+
+<h3>EU AI Act Compliance Sprint</h3>
+
+<p>In November 2025, the EU AI Act is already in effect, full compliance needed by 2026:</p>
+
+<p><strong>High-Risk AI Systems identification:</strong></p>
+
+<p>The following use cases fall into high-risk category:</p>
+<ul>
+<li>HR recruitment AI (CV screening, video interview analysis)</li>
+<li>Access control systems (biometric authentication)</li>
+<li>Credit scoring, fraud detection (financial decisions)</li>
+<li>Healthcare diagnosis support</li>
+<li>Critical infrastructure management (AI-optimized power grid)</li>
+</ul>
+
+<p><strong>Compliance requirements for high-risk AI:</strong></p>
+
+<pre><code>□ Risk assessment documentation (risk management system)
+□ Training data bias audit and documentation
+□ Human oversight mechanism (human-in-the-loop)
+□ Accuracy, robustness, cybersecurity test results
+□ Transparency documentation (explainable AI)
+□ Post-market monitoring plan (continuous performance tracking)
+□ CE marking and conformity assessment (accredited body)
+</code></pre>
+
+<p><strong>Timeline and costs:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Time required</th>
+<th>Cost</th>
+<th>Responsible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI inventory creation</td>
+<td>2 weeks</td>
+<td>€5,000</td>
+<td>Legal + IT</td>
+</tr>
+<tr>
+<td>Risk classification</td>
+<td>3 weeks</td>
+<td>€10,000</td>
+<td>Legal + AI team</td>
+</tr>
+<tr>
+<td>High-risk AI documentation</td>
+<td>8-12 weeks per system</td>
+<td>€30,000-80,000</td>
+<td>External consultant</td>
+</tr>
+<tr>
+<td>Conformity assessment</td>
+<td>4-8 weeks</td>
+<td>€20,000-50,000</td>
+<td>Notified Body</td>
+</tr>
+<tr>
+<td>Gap remediation</td>
+<td>Variable</td>
+<td>€50,000-200,000</td>
+<td>Engineering</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Months 10-12: Measurement, Optimization, and Next Phase</h2>
+
+<h3>Security Metrics Dashboard</h3>
+
+<p><strong>KPIs to track weekly/monthly:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target (12 months)</th>
+<th>Measurement method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shadow AI detection rate</td>
+<td>95% visibility</td>
+<td>Quarterly audit</td>
+</tr>
+<tr>
+<td>Policy compliance rate</td>
+<td>90%+ adherence</td>
+<td>DLP alerts + user surveys</td>
+</tr>
+<tr>
+<td>Incident response time</td>
+<td>< 4 hours (mean)</td>
+<td>Incident ticketing system</td>
+</tr>
+<tr>
+<td>Training completion</td>
+<td>100% of employees</td>
+<td>LMS tracking</td>
+</tr>
+<tr>
+<td>Phishing simulation success</td>
+<td>< 5% click rate</td>
+<td>Quarterly simulation</td>
+</tr>
+<tr>
+<td>Approved AI adoption</td>
+<td>70%+ of workforce</td>
+<td>License utilization</td>
+</tr>
+<tr>
+<td>AI-related security incidents</td>
+<td>Zero critical incidents</td>
+<td>SIEM + manual review</td>
+</tr>
+<tr>
+<td>Cost per user (AI security)</td>
+<td>€50-100/user/year</td>
+<td>Budget tracking</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Quarterly Business Review (QBR) template:</strong></p>
+
+<pre><code>Presentation for C-level:
+
+Slide 1: Executive Summary
+- AI adoption growth: X% increase vs previous quarter
+- Security posture improvement: Y points increase in maturity score
+- Incident summary: Z incidents, of which 0 critical
+
+Slide 2: Risk Reduction
+- Shadow AI reduction: before vs now
+- Data exfiltration prevented: X GB sensitive data blocked
+- Cost avoidance: potential breach cost vs actual spend
+
+Slide 3: Compliance Status
+- EU AI Act readiness: X% complete
+- Audit findings: Y new findings vs Z remediated
+
+Slide 4: Next Quarter Priorities
+- 3-5 major initiatives
+- Budget request (if needed)
+- Risk escalation (if any)
+</code></pre>
+
+<h3>Cost Optimization</h3>
+
+<p><strong>Expected cost breakdown after 12 months:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>First year cost (500 users)</th>
+<th>Run-rate (annual)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Licensed AI tools (enterprise)</td>
+<td>€180,000-360,000</td>
+<td>Same (subscription)</td>
+</tr>
+<tr>
+<td>Security tooling (DLP, CASB, monitoring)</td>
+<td>€150,000-250,000</td>
+<td>€120,000-200,000</td>
+</tr>
+<tr>
+<td>Training & awareness</td>
+<td>€30,000-50,000</td>
+<td>€20,000-30,000</td>
+</tr>
+<tr>
+<td>External pentesting & audits</td>
+<td>€100,000-180,000</td>
+<td>€80,000-120,000</td>
+</tr>
+<tr>
+<td>Compliance (EU AI Act)</td>
+<td>€100,000-300,000</td>
+<td>€40,000-80,000</td>
+</tr>
+<tr>
+<td>Personnel (2 FTE AI security)</td>
+<td>€180,000-280,000</td>
+<td>Same (salaries)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>€740,000-1,420,000</strong></td>
+<td><strong>€460,000-910,000</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Per user cost:</strong> €1,480-2,840 in first year, €920-1,820 annually thereafter</p>
+
+<h3>Phase 2 Planning (Months 13-24)</h3>
+
+<p><strong>Next year scope:</strong></p>
+
+<ol>
+<li><strong>AI Model Development Security</strong>
+<ul>
+<li>Secure MLOps pipeline implementation</li>
+<li>Model versioning and artifact management (MLflow, Weights & Biases)</li>
+<li>Training data provenance tracking</li>
+<li>Model card documentation automation</li>
+</ul>
+</li>
+<li><strong>Advanced Threat Detection</strong>
+<ul>
+<li>Model poisoning detection</li>
+<li>Adversarial example defense</li>
+<li>Data drift monitoring in production models</li>
+</ul>
+</li>
+<li><strong>Zero Trust Architecture for AI</strong>
+<ul>
+<li>Least privilege access to all AI resources</li>
+<li>Continuous authentication & authorization</li>
+<li>Micro-segmentation for AI workloads</li>
+</ul>
+</li>
+<li><strong>AI Security Team Expansion</strong>
+<ul>
+<li>3rd FTE hire: AI Security Architect</li>
+<li>4th FTE hire: ML Security Engineer</li>
+<li>External advisory board formation (academic + industry experts)</li>
+</ul>
+</li>
+</ol>
+
+<h2>Critical Success Factors</h2>
+
+<p><strong>What you must do:</strong></p>
+
+<ul>
+<li>✅ Secure executive buy-in early (CEO, CFO support for budget)</li>
+<li>✅ Communicate quick wins (shadow AI reduction, cost savings)</li>
+<li>✅ Enable, not block: provide secure alternatives instead of prohibiting</li>
+<li>✅ Cross-functional collaboration (Legal, IT, Business work together)</li>
+<li>✅ Continuous learning: AI security landscape changes, monthly updates needed</li>
+</ul>
+
+<p><strong>What to avoid:</strong></p>
+
+<ul>
+<li>❌ "Boil the ocean": don't try to solve everything at once</li>
+<li>❌ Security theater: policy exists but no enforcement</li>
+<li>❌ Vendor lock-in: don't depend on a single AI vendor</li>
+<li>❌ Ignoring the business: security cannot block innovation</li>
+<li>❌ Compliance-only mindset: compliance != security</li>
+</ul>
+
+<h2>Summary: 12-Month Roadmap Checklist</h2>
+
+<pre><code>Month 0: □ AI discovery audit □ Baseline security posture assessment
+Month 1: □ Quick wins (blocking, interim policy) □ API key rotation
+Month 2-3: □ DLP rules □ Enterprise AI platform launch □ Awareness training
+Month 4-6: □ Monitoring platform □ Prompt injection detection □ Governance framework
+Month 7-9: □ Red team program □ EU AI Act compliance sprint
+Month 10-12: □ Metrics dashboard □ QBR presentation □ Phase 2 planning
+</code></pre>
+
+<p>This roadmap is not a static document. CISOs must reassess priorities monthly because the AI security environment evolves faster than any other area in infosecurity. In November 2025, those who don't proactively manage AI risks will reactively manage crises in 2026.</p>
+
+<h2>Additional Resources</h2>
+
+<ul>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank">NIST AI Risk Management Framework 2.0 - Implementation Guide</a></li>
+<li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank">EU AI Act - Official Implementation Guidance</a></li>
+<li><a href="https://owasp.org/www-project-machine-learning-security-top-10/" target="_blank">OWASP Machine Learning Security Top 10</a></li>
+<li><a href="https://www.iso.org/standard/81230.html" target="_blank">ISO/IEC 42001:2023 - AI Management System Standard</a></li>
+<li><a href="https://cset.georgetown.edu/publication/securing-artificial-intelligence/" target="_blank">CSET Georgetown - Securing Artificial Intelligence Report</a></li>
+</ul>

@@ -1,0 +1,790 @@
+<h1>CISO AI Biztonsági Útvonaltervp 2025-2026</h1>
+
+<p>2025 novemberére az AI biztonság már nem a jövő kérdése, hanem a mindennapi operatív realitás. A CISO-k előtt álló kihívás: hogyan építsenek ki egy átfogó AI biztonsági stratégiát 12-18 hónapos időtávon, miközben az AI technológia gyorsabban fejlődik, mint a védelmi mechanizmusok. Ez a részletes roadmap gyakorlati lépéseket, ütemtervet és költségbecslést tartalmaz.</p>
+
+<h2>Kiindulási Pont: Jelenlegi Állapot Felmérése (0. Hónap)</h2>
+
+<h3>AI Discovery Audit</h3>
+
+<p>Az első 30 napban a legkritikusabb feladat a láthatatlan AI használat feltérképezése:</p>
+
+<p><strong>Shadow AI Discovery módszerek:</strong></p>
+
+<ul>
+<li><strong>Network traffic analysis:</strong> Azonosítsd az OpenAI, Anthropic, Google AI API endpointokra menő traffic-et</li>
+<li><strong>Browser extension scan:</strong> Ellenőrizd a ChatGPT, Claude, Copilot browser plugin-eket vállalati gépeken</li>
+<li><strong>Cloud cost anomaly:</strong> Azure OpenAI, AWS Bedrock, Google Vertex AI költések elemzése</li>
+<li><strong>Code repository scan:</strong> GitHub, GitLab keresés AI API key-ekre és hardcoded credentials-ekre</li>
+<li><strong>Employee survey:</strong> Névtelen kérdőív az AI tool használatról (reális képet ad az adoption mértékéről)</li>
+</ul>
+
+<p><strong>Várható eredmények:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Vállalat méret</th>
+<th>Átlagos shadow AI tool szám</th>
+<th>Dolgozók % akik használnak AI-t</th>
+<th>Költés / hónap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50-200 fő</td>
+<td>12-18</td>
+<td>35-45%</td>
+<td>€2,000-5,000</td>
+</tr>
+<tr>
+<td>200-1000 fő</td>
+<td>25-40</td>
+<td>50-65%</td>
+<td>€8,000-25,000</td>
+</tr>
+<tr>
+<td>1000-5000 fő</td>
+<td>60-120</td>
+<td>65-80%</td>
+<td>€40,000-150,000</td>
+</tr>
+<tr>
+<td>5000+ fő</td>
+<td>150-300+</td>
+<td>75-90%</td>
+<td>€200,000-1,000,000+</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Kockázati besorolás:</strong> Minden feltárt AI használatot kategorizálj:</p>
+
+<pre><code>CRITICAL: Üzleti titok, személyes adat, forráskód feldolgozása public AI-ban
+HIGH: Belső dokumentumok, email tartalom feldolgozása
+MEDIUM: Általános produktivitási feladatok (fordítás, összefoglalás)
+LOW: Publikus információ feldolgozása, brainstorming
+</code></pre>
+
+<h3>Baseline Security Posture</h3>
+
+<p>Mérjétek meg a jelenlegi érettségi szintet 5 dimenzióban (1-5 skála):</p>
+
+<table>
+<thead>
+<tr>
+<th>Dimenzió</th>
+<th>Level 1 (Kezdő)</th>
+<th>Level 3 (Közepes)</th>
+<th>Level 5 (Érett)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy & Governance</td>
+<td>Nincs AI policy</td>
+<td>Van draft policy</td>
+<td>Enforced policy + audit trail</td>
+</tr>
+<tr>
+<td>Technical Controls</td>
+<td>Nincs monitoring</td>
+<td>Basic DLP rules</td>
+<td>AI-specific DLP + prompt filtering</td>
+</tr>
+<tr>
+<td>Awareness Training</td>
+<td>Nincs AI training</td>
+<td>Egyszer volt oktatás</td>
+<td>Quarterly training + phishing simulation</td>
+</tr>
+<tr>
+<td>Vendor Management</td>
+<td>Ad-hoc beszerzés</td>
+<td>Approved vendor list</td>
+<td>Folyamatos vendor assessment</td>
+</tr>
+<tr>
+<td>Incident Response</td>
+<td>Nincs AI-specific playbook</td>
+<td>Van basic runbook</td>
+<td>Tesztelt playbook + quarterly drill</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Valós példa:</strong> Egy 800 fős magyar tech cég 2025 augusztusában végezte el az első AI discovery audit-ot. Eredmények: 43 különböző AI tool használata, amelyből 18 volt ismeretlen az IT részleg számára. 7 critical kockázatú esetet találtak (forráskód feltöltése ChatGPT-be). Az audit €15,000-ba került, de €2.4M potenciális adatszivárgási költséget előzött meg.</p>
+
+<h2>1-3. Hónap: Gyorsnyerések és Alapvető Védelem</h2>
+
+<h3>Quick Wins (1. hónap)</h3>
+
+<p><strong>Azonnal implementálandó kontrollok:</strong></p>
+
+<ol>
+<li>
+<p><strong>Browser-level blocking:</strong> Blokkolj minden public AI domain-t vállalati hálózaton</p>
+<pre><code>Blokkolt domének listája:
+- chat.openai.com (kivéve ha enterprise license van)
+- claude.ai (free tier)
+- gemini.google.com (free tier)
+- you.com, perplexity.ai, poe.com
+- character.ai, replika.ai (személyes AI)
+
+Költség: €0 (már meglévő web filter használata)
+Implementálási idő: 2 óra
+Hatás: 60-70% shadow AI usage azonnali leállítása
+</code></pre>
+</li>
+<li>
+<p><strong>Interim AI Usage Policy:</strong> 1 oldalas intézkedés azonnali kiküldése</p>
+<pre><code>Tartalom:
+✓ Public AI toolok tiltása érzékeny adatokkal
+✓ Jóváhagyott vállalati AI toolok listája
+✓ Reporting mechanizmus AI security incidensekhez
+✓ Consequence management (fegyelmi eljárás szabályai)
+
+Célcsoport: Minden dolgozó
+Formátum: Email + intranet banner + Slack/Teams announcement
+</code></pre>
+</li>
+<li>
+<p><strong>API Key Rotation:</strong> Minden található API key azonnali lecserélése</p>
+<ul>
+<li>GitHub secrets scan (TruffleHog, GitGuardian)</li>
+<li>Slack, email archive keresés "sk-" pattern-re (OpenAI keys)</li>
+<li>Cloud secret manager audit (AWS Secrets Manager, Azure Key Vault)</li>
+</ul>
+</li>
+</ol>
+
+<h3>Foundational Security Controls (2-3. hónap)</h3>
+
+<p><strong>1. DLP (Data Loss Prevention) szabályok AI-re:</strong></p>
+
+<pre><code>Rule 1: Érzékeny adat kategóriák blokkolása
+- GDPR Article 9 adatok (egészségügy, biometrikus, faji eredet)
+- PCI-DSS adatok (kártyaszám, CVV)
+- PII (személyi szám, lakcím, telefonszám)
+- Vállalati titok jelölések (Confidential, Internal Use Only)
+
+Rule 2: Bulk data upload megelőzése
+- 10+ email cím egyszerre
+- 50+ sor CSV/Excel adat
+- Teljes dokumentumok copy-paste (5000+ karakter)
+
+Rule 3: Source code protection
+- .py, .js, .java, .cpp file extension-ök
+- Git commit hash pattern
+- API endpoint URL-ek (https://api.company.com/*)
+
+Implementálás: Microsoft Purview DLP, Symantec DLP, Forcepoint DLP
+Költség: €15,000-50,000 (license + implementation)
+Időszükséglet: 4-6 hét
+</code></pre>
+
+<p><strong>2. Vállalati AI platform kiválasztása és launch:</strong></p>
+
+<p>Válassz 1-2 approved vendor-t és indítsd el enterprise szerződéssel:</p>
+
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Recommended Tool</th>
+<th>Költség (500 user)</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General productivity</td>
+<td>Microsoft 365 Copilot</td>
+<td>€15,000/hó</td>
+<td>2 hét</td>
+</tr>
+<tr>
+<td>Developer tools</td>
+<td>GitHub Copilot Enterprise</td>
+<td>€19,500/hó</td>
+<td>1 hét</td>
+</tr>
+<tr>
+<td>Custom AI apps</td>
+<td>Azure OpenAI Service</td>
+<td>Consumption-based</td>
+<td>4-6 hét</td>
+</tr>
+<tr>
+<td>Data analysis</td>
+<td>Google Gemini Enterprise</td>
+<td>€12,000/hó</td>
+<td>3 hét</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Launch stratégia:</strong></p>
+<ul>
+<li>Pilot phase: 50-100 kiválasztott early adopter (1 hónap)</li>
+<li>Feedback collection és policy finomhangolás</li>
+<li>General availability: teljes vállalat (phased rollout osztályonként)</li>
+<li>Kommunikáció: "A blokkolás nem büntetés, a biztonságos alternatívák biztosítása a cél"</li>
+</ul>
+
+<h3>Security Awareness Campaign Launch (3. hónap)</h3>
+
+<p><strong>Mandatory training program felépítése:</strong></p>
+
+<ol>
+<li>
+<p><strong>30 perces online modul:</strong> "AI Security Basics for Everyone"</p>
+<ul>
+<li>Mi az a prompt injection? (gyakorlati példával)</li>
+<li>Mitől veszélyes a public AI használata céges adatokkal?</li>
+<li>Hogyan használd biztonságosan a jóváhagyott toolokat?</li>
+<li>Hogyan reportálj AI security incident-et?</li>
+</ul>
+</li>
+<li>
+<p><strong>Role-specific training (60 perc):</strong></p>
+<ul>
+<li><strong>Developers:</strong> Secure coding with AI assistants, code review process</li>
+<li><strong>Marketing:</strong> Brand safety, generated content review</li>
+<li><strong>HR:</strong> Recruitment AI bias, candidate data protection</li>
+<li><strong>Finance:</strong> Fraudulent AI-generated invoices, deepfake CEO attacks</li>
+</ul>
+</li>
+<li>
+<p><strong>Quarterly simulations:</strong> Phishing emails AI-generált tartalommal</p>
+<ul>
+<li>Baseline click rate: 15-25%</li>
+<li>Target: 5% alatt 12 hónap után</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>Költségek:</strong></p>
+<ul>
+<li>Training platform license (KnowBe4, Proofpoint): €8,000-20,000/év</li>
+<li>Content development: €15,000 (egyedi, vállalat-specifikus modulok)</li>
+<li>Internal trainer time: 40 óra (€4,000 opportunity cost)</li>
+</ul>
+
+<h2>4-6. Hónap: Mély Védelem és Automatizálás</h2>
+
+<h3>Advanced Monitoring & Detection</h3>
+
+<p><strong>1. AI Usage Analytics Platform implementáció:</strong></p>
+
+<p>Telepíts egy központi monitoring eszközt, amely real-time láthatóságot ad:</p>
+
+<p><strong>Főbb feature-ök:</strong></p>
+<ul>
+<li>API call volume tracking minden vendor felé</li>
+<li>Token consumption analysis (cost monitoring)</li>
+<li>Anomaly detection (váratlan volume spike, unusual hours)</li>
+<li>Data classification enforcement (sensitive data flag esetén blokkolás)</li>
+<li>User behavior analytics (ki használ gyakran AI-t, mire?)</li>
+</ul>
+
+<p><strong>Tool opciók:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Megoldás</th>
+<th>Deployment</th>
+<th>Költség (500 user)</th>
+<th>Feature completeness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft Defender for Cloud Apps (CASB)</td>
+<td>SaaS</td>
+<td>€7,500/hó</td>
+<td>8/10</td>
+</tr>
+<tr>
+<td>Netskope Intelligent SSE</td>
+<td>SaaS</td>
+<td>€12,000/hó</td>
+<td>9/10</td>
+</tr>
+<tr>
+<td>Zscaler AI Security</td>
+<td>SaaS</td>
+<td>€10,000/hó</td>
+<td>8/10</td>
+</tr>
+<tr>
+<td>Custom build (SIEM + APIs)</td>
+<td>Self-hosted</td>
+<td>€50,000 setup</td>
+<td>6/10 (custom)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>2. Prompt Injection Detection megoldás:</strong></p>
+
+<p>Implementálj egy layer-t, amely real-time szűri a prompt-okat:</p>
+
+<pre><code>Architecture:
+User → Prompt Filter → AI Model → Response Filter → User
+
+Prompt Filter szabályok:
+✓ Jailbreak pattern detection (regex + ML model)
+✓ PII masking (email, phone number automatikus redaction)
+✓ Sensitive keyword blocking (company name + "confidential")
+✓ Excessive privilege request ("ignore previous instructions")
+
+Technológia opciók:
+- Lakera Guard (API-based SaaS): $0.001 per prompt
+- Robust Intelligence AI Firewall: $15,000/hó flat fee
+- Custom BERT-based classifier: €80,000 development
+</code></pre>
+
+<h3>Governance & Policy Maturation</h3>
+
+<p><strong>Comprehensive AI Governance Framework:</strong></p>
+
+<p>A 2 oldalas interim policy helyett egy 30-40 oldalas átfogó dokumentum:</p>
+
+<ol>
+<li><strong>AI Acceptable Use Policy (AUP)</strong>
+<ul>
+<li>Engedélyezett use case-ek listája</li>
+<li>Tiltott felhasználások (HR döntések automatizálása, audit nélkül)</li>
+<li>Data classification matrix (milyen adat mehet milyen AI-ba)</li>
+</ul>
+</li>
+<li><strong>AI Procurement Policy</strong>
+<ul>
+<li>Vendor assessment checklist</li>
+<li>Mandatory security requirements (SOC 2, ISO 27001, GDPR DPA)</li>
+<li>Approval workflow (ki engedélyezhet új AI tool beszerzést?)</li>
+</ul>
+</li>
+<li><strong>AI Development Lifecycle Policy</strong>
+<ul>
+<li>Secure coding guidelines AI asszisztensekkel</li>
+<li>Model training data governance (ki approve-olja a training set-et?)</li>
+<li>Pre-production security testing requirements</li>
+</ul>
+</li>
+<li><strong>AI Incident Response Playbook</strong>
+<ul>
+<li>Scenario 1: Adatszivárgás public AI-ban (forráskód leak)</li>
+<li>Scenario 2: Jailbreak exploit production AI-ban</li>
+<li>Scenario 3: Deepfake CEO fraud attempt</li>
+<li>Scenario 4: Model poisoning training data-ban</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>AI Governance Committee felállítása:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Szerep</th>
+<th>Résztvevő</th>
+<th>Felelősség</th>
+<th>Időallokáció</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chair</td>
+<td>CISO</td>
+<td>Stratégia, escalation, board reporting</td>
+<td>10h/hónap</td>
+</tr>
+<tr>
+<td>Co-Chair</td>
+<td>CTO / Chief AI Officer</td>
+<td>Technikai döntések, roadmap</td>
+<td>8h/hónap</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Legal Counsel</td>
+<td>Compliance, szerződések</td>
+<td>6h/hónap</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Privacy Officer (DPO)</td>
+<td>GDPR, adatvédelem</td>
+<td>6h/hónap</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>HR Lead</td>
+<td>Workforce impact, training</td>
+<td>4h/hónap</td>
+</tr>
+<tr>
+<td>Member</td>
+<td>Product Management</td>
+<td>Use case prioritization</td>
+<td>4h/hónap</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Havi meeting agenda:</strong></p>
+<pre><code>1. AI usage metrics review (adoption, incidents, costs)
+2. New AI tool requests assessment (approve/reject/defer)
+3. Policy violation review és consequence management
+4. Threat intelligence update (új attack vectors)
+5. Compliance status (EU AI Act, GDPR audits)
+</code></pre>
+
+<h2>7-9. Hónap: Offenzív Biztonság és Compliance</h2>
+
+<h3>Red Team & Penetration Testing</h3>
+
+<p><strong>AI-specific pentesting program indítása:</strong></p>
+
+<p><strong>Internal red team (ha van kapacitás):</strong></p>
+<ul>
+<li>Havonta 1-2 nap dedikált AI security testing</li>
+<li>Célpont: saját AI alkalmazások, approved vendor toolok</li>
+<li>Teszt típusok: prompt injection, data exfiltration, jailbreak attempts</li>
+</ul>
+
+<p><strong>External pentest (quarterly):</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Vendor példák</th>
+<th>Költség</th>
+<th>Időtartam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI API security</td>
+<td>Bishop Fox, NCC Group</td>
+<td>€25,000-40,000</td>
+<td>2 hét</td>
+</tr>
+<tr>
+<td>ML model robustness</td>
+<td>Trail of Bits, HiddenLayer</td>
+<td>€30,000-50,000</td>
+<td>3 hét</td>
+</tr>
+<tr>
+<td>Full application pentest</td>
+<td>Cure53, Securitum</td>
+<td>€40,000-70,000</td>
+<td>4 hét</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Bug Bounty Program launch:</strong></p>
+
+<p>Ha van public-facing AI feature, indíts bug bounty programot:</p>
+
+<pre><code>Platform: HackerOne, Bugcrowd, Intigriti
+Scope: AI prompt endpoints, model inference APIs
+Payout range:
+- Critical (RCE, data breach): €5,000-25,000
+- High (prompt injection, PII leak): €1,000-5,000
+- Medium (DoS, rate limit bypass): €500-1,000
+- Low (info disclosure): €100-500
+
+Első 6 hónap költség: €50,000-100,000 (payout + platform fee)
+</code></pre>
+
+<h3>EU AI Act Compliance Sprint</h3>
+
+<p>2025 novemberében az EU AI Act már érvényben van, 2026-ra teljes compliance szükséges:</p>
+
+<p><strong>High-Risk AI Systems azonosítása:</strong></p>
+
+<p>Az alábbi use case-ek high-risk kategóriába esnek:</p>
+<ul>
+<li>HR recruitment AI (CV szűrés, video interview analysis)</li>
+<li>Access control systems (biometric authentication)</li>
+<li>Credit scoring, fraud detection (pénzügyi döntések)</li>
+<li>Healthcare diagnosis support</li>
+<li>Critical infrastructure management (AI-optimized power grid)</li>
+</ul>
+
+<p><strong>Compliance követelmények high-risk AI-hoz:</strong></p>
+
+<pre><code>□ Kockázatelemzési dokumentáció (risk management system)
+□ Training data bias audit és dokumentáció
+□ Human oversight mechanizmus (human-in-the-loop)
+□ Accuracy, robustness, cybersecurity teszt eredmények
+□ Átláthatósági dokumentáció (magyarázható AI)
+□ Post-market monitoring plan (continuous performance tracking)
+□ CE marking és conformity assessment (akkreditált testület)
+</code></pre>
+
+<p><strong>Timeline és költségek:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Lépés</th>
+<th>Időigény</th>
+<th>Költség</th>
+<th>Felelős</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI inventory készítés</td>
+<td>2 hét</td>
+<td>€5,000</td>
+<td>Legal + IT</td>
+</tr>
+<tr>
+<td>Risk classification</td>
+<td>3 hét</td>
+<td>€10,000</td>
+<td>Legal + AI team</td>
+</tr>
+<tr>
+<td>High-risk AI dokumentáció</td>
+<td>8-12 hét per rendszer</td>
+<td>€30,000-80,000</td>
+<td>External consultant</td>
+</tr>
+<tr>
+<td>Conformity assessment</td>
+<td>4-8 hét</td>
+<td>€20,000-50,000</td>
+<td>Notified Body</td>
+</tr>
+<tr>
+<td>Gap remediation</td>
+<td>Változó</td>
+<td>€50,000-200,000</td>
+<td>Engineering</td>
+</tr>
+</tbody>
+</table>
+
+<h2>10-12. Hónap: Mérés, Optimalizálás és Következő Fázis</h2>
+
+<h3>Security Metrics Dashboard</h3>
+
+<p><strong>KPI-ok amelyeket hetente/havonta követni kell:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Metrika</th>
+<th>Target (12 hónap)</th>
+<th>Mérési módszer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shadow AI detection rate</td>
+<td>95% visibility</td>
+<td>Quarterly audit</td>
+</tr>
+<tr>
+<td>Policy compliance rate</td>
+<td>90%+ adherence</td>
+<td>DLP alerts + user surveys</td>
+</tr>
+<tr>
+<td>Incident response time</td>
+<td>< 4 hours (mean)</td>
+<td>Incident ticketing system</td>
+</tr>
+<tr>
+<td>Training completion</td>
+<td>100% of employees</td>
+<td>LMS tracking</td>
+</tr>
+<tr>
+<td>Phishing simulation success</td>
+<td>< 5% click rate</td>
+<td>Quarterly simulation</td>
+</tr>
+<tr>
+<td>Approved AI adoption</td>
+<td>70%+ of workforce</td>
+<td>License utilization</td>
+</tr>
+<tr>
+<td>AI-related security incidents</td>
+<td>Zero critical incidents</td>
+<td>SIEM + manual review</td>
+</tr>
+<tr>
+<td>Cost per user (AI security)</td>
+<td>€50-100/user/year</td>
+<td>Budget tracking</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Quarterly Business Review (QBR) template:</strong></p>
+
+<pre><code>Prezentáció a C-level-nek:
+
+Slide 1: Executive Summary
+- AI adoption growth: X% növekedés vs előző quarter
+- Security posture improvement: Y ponttal nőtt a maturity score
+- Incident summary: Z incident, amelyből 0 critical
+
+Slide 2: Risk Reduction
+- Shadow AI reduction: volt vs mostani
+- Data exfiltration prevented: X GB sensitive data blokkolva
+- Cost avoidance: potenciális breach cost vs actual spend
+
+Slide 3: Compliance Status
+- EU AI Act readiness: X% complete
+- Audit findings: Y új finding vs Z remediated
+
+Slide 4: Next Quarter Priorities
+- 3-5 major initiative
+- Budget request (ha szükséges)
+- Risk escalation (ha van)
+</code></pre>
+
+<h3>Cost Optimization</h3>
+
+<p><strong>12 hónap után költség breakdown várhatóan:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Kategória</th>
+<th>Első év költség (500 user)</th>
+<th>Run-rate (évente)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Licensed AI tools (enterprise)</td>
+<td>€180,000-360,000</td>
+<td>Same (subscription)</td>
+</tr>
+<tr>
+<td>Security tooling (DLP, CASB, monitoring)</td>
+<td>€150,000-250,000</td>
+<td>€120,000-200,000</td>
+</tr>
+<tr>
+<td>Training & awareness</td>
+<td>€30,000-50,000</td>
+<td>€20,000-30,000</td>
+</tr>
+<tr>
+<td>External pentesting & audits</td>
+<td>€100,000-180,000</td>
+<td>€80,000-120,000</td>
+</tr>
+<tr>
+<td>Compliance (EU AI Act)</td>
+<td>€100,000-300,000</td>
+<td>€40,000-80,000</td>
+</tr>
+<tr>
+<td>Personnel (2 FTE AI security)</td>
+<td>€180,000-280,000</td>
+<td>Same (salaries)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>€740,000-1,420,000</strong></td>
+<td><strong>€460,000-910,000</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Per user cost:</strong> €1,480-2,840 az első évben, €920-1,820 utána évente</p>
+
+<h3>Phase 2 Planning (13-24. Hónap)</h3>
+
+<p><strong>Következő évre scope:</strong></p>
+
+<ol>
+<li><strong>AI Model Development Security</strong>
+<ul>
+<li>Secure MLOps pipeline implementálás</li>
+<li>Model versioning és artifact management (MLflow, Weights & Biases)</li>
+<li>Training data provenance tracking</li>
+<li>Model card documentation automation</li>
+</ul>
+</li>
+<li><strong>Advanced Threat Detection</strong>
+<ul>
+<li>Model poisoning detection</li>
+<li>Adversarial example defense</li>
+<li>Data drift monitoring production modelsekben</li>
+</ul>
+</li>
+<li><strong>Zero Trust Architecture for AI</strong>
+<ul>
+<li>Least privilege access minden AI resource-hoz</li>
+<li>Continuous authentication & authorization</li>
+<li>Micro-segmentation AI workloads számára</li>
+</ul>
+</li>
+<li><strong>AI Security Team Expansion</strong>
+<ul>
+<li>3rd FTE hire: AI Security Architect</li>
+<li>4th FTE hire: ML Security Engineer</li>
+<li>External advisory board formation (academic + industry experts)</li>
+</ul>
+</li>
+</ol>
+
+<h2>Kritikus Siker Faktorok</h2>
+
+<p><strong>Amiket biztosan csináljatok:</strong></p>
+
+<ul>
+<li>✅ Executive buy-in megszerzése az elején (CEO, CFO támogatás budget-hez)</li>
+<li>✅ Quick wins kommunikálása (shadow AI redukció, cost savings)</li>
+<li>✅ Enable, not block: biztonságos alternatívák biztosítása a tiltás helyett</li>
+<li>✅ Cross-functional collaboration (Legal, IT, Business együtt dolgozik)</li>
+<li>✅ Continuous learning: AI security landscape változik, havi frissítés szükséges</li>
+</ul>
+
+<p><strong>Amiket kerüljetek:</strong></p>
+
+<ul>
+<li>❌ "Boil the ocean": ne próbáljatok mindent egyszerre megoldani</li>
+<li>❌ Security theater: policy van, de nincs enforcement</li>
+<li>❌ Vendor lock-in: ne függjetek egyetlen AI vendor-tól</li>
+<li>❌ Ignoring the business: security nem gátolhatja az innovációt</li>
+<li>❌ Compliance-only mindset: compliance != security</li>
+</ul>
+
+<h2>Összegzés: 12 Hónapos Roadmap Checklist</h2>
+
+<pre><code>Hónap 0: □ AI discovery audit □ Baseline security posture felmérés
+Hónap 1: □ Quick wins (blocking, interim policy) □ API key rotation
+Hónap 2-3: □ DLP rules □ Enterprise AI platform launch □ Awareness training
+Hónap 4-6: □ Monitoring platform □ Prompt injection detection □ Governance framework
+Hónap 7-9: □ Red team program □ EU AI Act compliance sprint
+Hónap 10-12: □ Metrics dashboard □ QBR prezentáció □ Phase 2 planning
+</code></pre>
+
+<p>Ez a roadmap nem statikus dokumentum. A CISO-k felelőssége, hogy havonta újraértékeljék a prioritásokat, mert az AI security környezet gyorsabban változik, mint bármely más terület az infosecurity-ben. 2025 novemberében aki nem kezeli proaktívan az AI kockázatokat, az reaktívan fog válságot kezelni 2026-ban.</p>
+
+<h2>További Források</h2>
+
+<ul>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank">NIST AI Risk Management Framework 2.0 - Implementation Guide</a></li>
+<li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank">EU AI Act - Official Implementation Guidance</a></li>
+<li><a href="https://owasp.org/www-project-machine-learning-security-top-10/" target="_blank">OWASP Machine Learning Security Top 10</a></li>
+<li><a href="https://www.iso.org/standard/81230.html" target="_blank">ISO/IEC 42001:2023 - AI Management System Standard</a></li>
+<li><a href="https://cset.georgetown.edu/publication/securing-artificial-intelligence/" target="_blank">CSET Georgetown - Securing Artificial Intelligence Report</a></li>
+</ul>
