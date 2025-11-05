@@ -1,0 +1,839 @@
+<h1>Harmadik Féltől Származó AI Kockázatkezelés 2025</h1>
+
+<p>2025 novemberére a vállalatok átlagosan 12-18 különböző third-party AI service-t használnak - OpenAI, Anthropic, Google, Microsoft, valamint számtalan kisebb specialized AI vendor. Minden egyes third-party AI egy új kockázati pontot jelent: adatszivárgás, compliance problémák, vendor lock-in, service outage. Ez az útmutató segít strukturáltan kezelni a third-party AI kockázatokat.</p>
+
+<h2>Miért Kritikus A Third-Party AI Risk Management?</h2>
+
+<h3>A Third-Party AI Landscape 2025-ben</h3>
+
+<p><strong>Tipikus enterprise third-party AI stack:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Kategória</th>
+<th>Példa Vendorok</th>
+<th>Use Case</th>
+<th>Kockázati Szint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundation Models</td>
+<td>OpenAI, Anthropic, Google, Meta</td>
+<td>Text generation, reasoning, coding</td>
+<td>HIGH</td>
+</tr>
+<tr>
+<td>Productivity Suite</td>
+<td>Microsoft 365 Copilot, Google Workspace AI</td>
+<td>Email, docs, meetings</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td>Developer Tools</td>
+<td>GitHub Copilot, Cursor, Tabnine</td>
+<td>Code completion, generation</td>
+<td>HIGH</td>
+</tr>
+<tr>
+<td>Customer Service</td>
+<td>Intercom AI, Zendesk AI, Ada</td>
+<td>Chatbots, ticket routing</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td>Marketing & Sales</td>
+<td>Jasper, Copy.ai, HubSpot AI</td>
+<td>Content generation, lead scoring</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td>Data Analytics</td>
+<td>Tableau AI, ThoughtSpot, Sigma</td>
+<td>BI dashboards, insights</td>
+<td>HIGH</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Darktrace, Vectra, CrowdStrike AI</td>
+<td>Threat detection, SOC automation</td>
+<td>CRITICAL</td>
+</tr>
+<tr>
+<td>HR & Recruitment</td>
+<td>HireVue, Pymetrics, Eightfold</td>
+<td>Resume screening, interview analysis</td>
+<td>HIGH (GDPR + bias)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Valós Third-Party AI Incidents 2025-ből</h3>
+
+<p><strong>Eset 1: OpenAI API Outage - Március 2025</strong></p>
+<ul>
+<li><strong>Esemény:</strong> OpenAI API 6 órás global outage</li>
+<li><strong>Impact:</strong> 40,000+ vállalat érintett, akiknek customer-facing chatbotjai leálltak</li>
+<li><strong>Példa veszteség:</strong> Egy középméretű e-commerce cég €180K revenue loss (6 óra × €30K/óra átlag)</li>
+<li><strong>Tanulság:</strong> Nincs fallback mechanism → teljes business functionality kiesés</li>
+</ul>
+
+<p><strong>Eset 2: AI Training Data Leak - Július 2025</strong></p>
+<ul>
+<li><strong>Esemény:</strong> Egy kisebb AI analytics vendor training data breach</li>
+<li><strong>Impact:</strong> 12 ügyfél confidential business data (revenue reports, customer lists) kiszivárgott</li>
+<li><strong>Példa bírság:</strong> GDPR fine €2.4M egy érintett cégnek, mert nem végeztek due diligence a vendor security-jén</li>
+<li><strong>Tanulság:</strong> A vállalat felelős a vendor data handling-jéért (GDPR Article 28)</li>
+</ul>
+
+<p><strong>Eset 3: AI Vendor Acquisition - Szeptember 2025</strong></p>
+<ul>
+<li><strong>Esemény:</strong> Egy népszerű HR AI tool startupot felvásárolt egy kínai tech giant</li>
+<li><strong>Impact:</strong> EU vállalatok azonnal le kellett állítsák a service-t (data residency compliance)</li>
+<li><strong>Példa költség:</strong> €500K migration költség új vendor-hez + 4 hónap project delay</li>
+<li><strong>Tanulság:</strong> Vendor ownership change = security/compliance reevaluation szükséges</li>
+</ul>
+
+<h2>Third-Party AI Risk Taxonomy</h2>
+
+<h3>1. Data Privacy & Security Risks</h3>
+
+<p><strong>A. Data Residency & Sovereignty</strong></p>
+
+<p><strong>Kérdések minden AI vendor számára:</strong></p>
+<ul>
+<li>Hol tárolják a prompt/query adatokat? (US, EU, Asia?)</li>
+<li>Hol vannak a training data centers? (ha fine-tuning-ot kínálnak)</li>
+<li>Van-e EU-dedikált instance? (GPT-5 EU, Claude EU-West)</li>
+<li>Milyen backup/DR (disaster recovery) geo-locations vannak?</li>
+</ul>
+
+<p><strong>Red flags:</strong></p>
+<ul>
+<li>❌ "We use global cloud infrastructure" (nincs explicit EU境内 garantálva)</li>
+<li>❌ "Data may be processed in US for performance reasons"</li>
+<li>❌ Nem hajlandó EU境内 data residency-t szerződésben commitálni</li>
+</ul>
+
+<p><strong>B. Training Data Usage</strong></p>
+
+<p><strong>Critical policy kérdés:</strong> A vendor használja-e az ügyfél prompt/data-ját model training-re?</p>
+
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Default Policy (2025)</th>
+<th>Enterprise Opt-out?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI API (Enterprise)</td>
+<td>No training on customer data</td>
+<td>N/A (default safe)</td>
+</tr>
+<tr>
+<td>Anthropic Claude (Pro/Enterprise)</td>
+<td>No training on customer data</td>
+<td>N/A (default safe)</td>
+</tr>
+<tr>
+<td>Google Gemini (Enterprise)</td>
+<td>No training on customer data</td>
+<td>N/A (default safe)</td>
+</tr>
+<tr>
+<td>Free-tier AI services</td>
+<td>⚠ May use for training</td>
+<td>Usually NO opt-out</td>
+</tr>
+<tr>
+<td>Smaller AI vendors</td>
+<td>⚠ Varies widely</td>
+<td>Must verify per vendor</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Action item:</strong> Explicit "no training" clause a szerződésben, nem csak a vendor public policy-jára hagyatkozni.</p>
+
+<p><strong>C. Access Controls & Authentication</strong></p>
+
+<p><strong>Minimum requirements:</strong></p>
+<ul>
+<li>✅ SSO integration (SAML 2.0, OAuth 2.0 with corporate IdP)</li>
+<li>✅ MFA enforcement capability</li>
+<li>✅ Role-based access control (RBAC) - nem minden user mindent érhet el</li>
+<li>✅ API key rotation support (maximum 90 napos expiry)</li>
+<li>✅ IP whitelisting option (production API calls csak corporate network-ről)</li>
+<li>✅ Audit logs export (minden API call, admin action logolva és exportálható)</li>
+</ul>
+
+<p><strong>Ha ezek közül 3+ hiányzik → Ez egy immature security posture red flag.</strong></p>
+
+<h3>2. Compliance & Regulatory Risks</h3>
+
+<p><strong>A. GDPR Compliance (Data Processor Obligations)</strong></p>
+
+<p><strong>GDPR Article 28 checklist:</strong></p>
+
+<pre><code>□ Van-e aláírt Data Processing Agreement (DPA)?
+□ A DPA tartalmazza-e az EU Standard Contractual Clauses (SCC) legújabb verzióját?
+□ Van-e dokumentált adatvédelmi impact assessment (DPIA) a vendor részéről?
+□ Milyen sub-processor lista van? (hol vannak ezek location-wise?)
+□ Van-e automatikus breach notification commitment (72h GDPR követelmény)?
+□ Hogyan kezelik a data subject rights requests-t? (deletion, access, portability)
+□ Van-e 30 napos notice period ha sub-processor változik?
+</code></pre>
+
+<p><strong>Valós példa:</strong> 2025 májusban egy német retailer €1.8M GDPR bírságot kapott, mert az AI chatbot vendor-uk nem volt proper DPA-val lefedve, és customer PII-t processzáltak US境内.</p>
+
+<p><strong>B. EU AI Act Compliance (High-Risk AI Systems)</strong></p>
+
+<p>Ha a third-party AI vendor high-risk category-ba tartozik (pl. HR recruitment tool, credit scoring), akkor:</p>
+
+<ul>
+<li>✅ Van-e CE marking és conformity assessment dokumentáció?</li>
+<li>✅ Milyen human oversight mechanism van implementálva?</li>
+<li>✅ Hogyan biztosítják az accuracy, robustness, cybersecurity requirements-t?</li>
+<li>✅ Van-e bias audit report harmadik fél által?</li>
+<li>✅ Milyen post-market monitoring van beállítva?</li>
+</ul>
+
+<p><strong>Important:</strong> Ha egy vendor high-risk AI-t nyújt és nem tud EU AI Act compliance-t bizonyítani, ne használd 2025 november után!</p>
+
+<p><strong>C. Industry-Specific Regulations</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Industry</th>
+<th>Regulation</th>
+<th>AI Vendor Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Healthcare</td>
+<td>HIPAA (US), MDR (EU)</td>
+<td>AI analyzing PHI needs BAA + medical device approval</td>
+</tr>
+<tr>
+<td>Finance</td>
+<td>PCI-DSS, DORA</td>
+<td>AI accessing payment data needs PCI compliance</td>
+</tr>
+<tr>
+<td>Insurance</td>
+<td>Solvency II</td>
+<td>AI model explainability requirements</td>
+</tr>
+<tr>
+<td>Legal</td>
+<td>Attorney-client privilege</td>
+<td>AI legal research tools must preserve privilege</td>
+</tr>
+</tbody>
+</table>
+
+<h3>3. Operational & Business Continuity Risks</h3>
+
+<p><strong>A. Service Availability & SLA</strong></p>
+
+<p><strong>Tipikus AI vendor SLA tiers (2025):</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>SLA Tier</th>
+<th>Uptime Guarantee</th>
+<th>Downtime/év</th>
+<th>Typical Cost Premium</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard</td>
+<td>99.0%</td>
+<td>3.65 nap</td>
+<td>Baseline</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>99.5%</td>
+<td>1.83 nap</td>
+<td>+20-30%</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>99.9%</td>
+<td>8.76 óra</td>
+<td>+50-80%</td>
+</tr>
+<tr>
+<td>Mission Critical</td>
+<td>99.95%</td>
+<td>4.38 óra</td>
+<td>+100-150%</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Kérdések az SLA-val kapcsolatban:</strong></p>
+<ul>
+<li>Mi számít "downtime"-nak? (complete outage vs degraded performance?)</li>
+<li>Mi a compensation ha breach történik? (service credits típusosan 10-25% monthly fee)</li>
+<li>Mérés módja: hogyan igazolod a downtime-ot? (vendor dashboard vs independent monitoring?)</li>
+<li>Exclusions: force majeure, DDoS, customer-caused issues</li>
+</ul>
+
+<p><strong>B. Vendor Lock-in Kockázat</strong></p>
+
+<p><strong>Lock-in severity assessment:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Lock-in Factor</th>
+<th>Low Risk</th>
+<th>High Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Export</td>
+<td>Standard format (JSON, CSV)</td>
+<td>Proprietary format, no export tool</td>
+</tr>
+<tr>
+<td>API Compatibility</td>
+<td>OpenAI-compatible API</td>
+<td>Proprietary API, unique syntax</td>
+</tr>
+<tr>
+<td>Model Switching Cost</td>
+<td>Prompt portability, 1-2 weeks</td>
+<td>Extensive re-engineering, 3-6 months</td>
+</tr>
+<tr>
+<td>Integration Depth</td>
+<td>API-only integration</td>
+<td>Deep system integration, custom code</td>
+</tr>
+<tr>
+<td>Training Data</td>
+<td>Generic model, no fine-tuning</td>
+<td>Heavy fine-tuning with proprietary data</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Mitigation stratégiák:</strong></p>
+<ul>
+<li><strong>Multi-vendor strategy:</strong> Ne függj egyetlen AI vendor-tól. Példa: Primary = OpenAI, Fallback = Anthropic Claude</li>
+<li><strong>Abstraction layer:</strong> Wrapper API saját kód-ban, amely könnyíti a vendor switch-t</li>
+<li><strong>Contractual exit provisions:</strong> 60-90 napos termination notice + data export guarantee szerződésben</li>
+</ul>
+
+<p><strong>C. Financial Stability & M&A Risk</strong></p>
+
+<p><strong>Vendor viability checklist:</strong></p>
+
+<pre><code>□ Van-e publikus revenue/funding information?
+□ Legutóbbi funding round: mikor és mekkora? (<18 months = fresh, >36 months = potential risk)
+□ Burn rate vs runway: hány hónap cash van?
+□ Customer base: van-e 100+ enterprise customer? (social proof)
+□ Market position: top 3 vendor a category-ban?
+□ Acquisition rumors: van-e M&A activity a space-ben?
+</code></pre>
+
+<p><strong>Red flags:</strong></p>
+<ul>
+<li>❌ Series A startup 2 éves runway-vel, akitől mission-critical service függsz</li>
+<li>❌ Recent exec departures (CTO, CEO turnover)</li>
+<li>❌ No public customer references vagy case studies</li>
+<li>❌ Pricing pressure: váratlan áremelés vagy desperate diszkontok</li>
+</ul>
+
+<h3>4. Technical & Performance Risks</h3>
+
+<p><strong>A. Model Accuracy & Drift</strong></p>
+
+<p><strong>Ha egy third-party AI service-t használsz production-ban:</strong></p>
+
+<ul>
+<li>Hogyan monitorozod az accuracy-t? (baseline metrics capture az elején)</li>
+<li>Van-e alerting ha accuracy drop >5% észlelhető?</li>
+<li>Milyen gyakran változik a vendor a model-t? (version control)</li>
+<li>Van-e model version pinning lehetőség? (critical for production stability)</li>
+</ul>
+
+<p><strong>Valós példa:</strong> 2025 április - egy vendor csendes model update után egy fraud detection AI false positive rate 8%-ról 18%-ra ugrott. A client csak 2 hét után vette észre, mire már 500+ legitimate transaction-t blokkolt.</p>
+
+<p><strong>Best practice:</strong></p>
+<ul>
+<li>Capture baseline performance metrics (accuracy, latency, error rate)</li>
+<li>Continuous monitoring dashboard (vendor API metrics + business KPIs)</li>
+<li>A/B testing framework ha vendor model változik</li>
+<li>Rollback plan ha új model rosszul performál</li>
+</ul>
+
+<p><strong>B. Latency & Rate Limits</strong></p>
+
+<p><strong>Tipikus API rate limits (2025 november):</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Tier</th>
+<th>Requests/min</th>
+<th>Tokens/min</th>
+<th>Concurrent Requests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI GPT-5</td>
+<td>Enterprise</td>
+<td>10,000</td>
+<td>10M</td>
+<td>500</td>
+</tr>
+<tr>
+<td>Anthropic Claude Opus</td>
+<td>Enterprise</td>
+<td>5,000</td>
+<td>5M</td>
+<td>250</td>
+</tr>
+<tr>
+<td>Google Gemini Pro</td>
+<td>Enterprise</td>
+<td>15,000</td>
+<td>32M</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Smaller vendors</td>
+<td>Varies</td>
+<td>100-1000</td>
+<td>100K-1M</td>
+<td>10-50</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Kérdések:</strong></p>
+<ul>
+<li>Mi történik ha rate limit-et elér? (429 response + Retry-After header?)</li>
+<li>Van-e burst capacity rövid időre? (pl. 2x rate limit 5 percig)</li>
+<li>Hogyan scale-elsz ha business growth-tal nő a usage?</li>
+<li>Van-e dedicated capacity reservation option?</li>
+</ul>
+
+<h2>Third-Party AI Vendor Assessment Framework</h2>
+
+<h3>Vendor Security Questionnaire (Top 40 Must-Ask Kérdések)</h3>
+
+<p><strong>Section 1: Data Handling (10 kérdés)</strong></p>
+
+<ol>
+<li>Where is customer data stored geographically? (List all regions)</li>
+<li>Do you use customer prompts/data for model training? (Yes/No/Opt-out)</li>
+<li>What is the data retention policy? (How long are prompts/logs stored?)</li>
+<li>Can we configure zero-day data retention? (Immediate deletion after response)</li>
+<li>Do you support customer-managed encryption keys (CMEK)?</li>
+<li>What encryption standards are used? (At-rest: AES-256? In-transit: TLS 1.3?)</li>
+<li>Where are backups stored? (Same region as primary data?)</li>
+<li>How do you handle data subject rights requests? (GDPR Article 15-22)</li>
+<li>What is your data breach notification process? (Timeline, channels)</li>
+<li>Do you perform regular data privacy audits? (Frequency, by whom?)</li>
+</ol>
+
+<p><strong>Section 2: Security & Compliance (10 kérdés)</strong></p>
+
+<ol start="11">
+<li>What security certifications do you have? (ISO 27001, SOC 2 Type II, ISO 27701?)</li>
+<li>Can you provide most recent SOC 2 report? (Must be <18 months old)</li>
+<li>Do you have a bug bounty program? (Public or private?)</li>
+<li>What is your vulnerability disclosure policy?</li>
+<li>How often do you perform penetration testing? (Annually? By whom?)</li>
+<li>Do you have EU AI Act compliance for high-risk AI? (If applicable)</li>
+<li>Is there a signed DPA with EU Standard Contractual Clauses?</li>
+<li>What is your incident response SLA? (Time to notification)</li>
+<li>Do you have cyber insurance? (Coverage amount?)</li>
+<li>What are your password/MFA policies? (Enforcement capability?)</li>
+</ol>
+
+<p><strong>Section 3: Access & Authentication (5 kérdés)</strong></p>
+
+<ol start="21">
+<li>Do you support SSO integration? (SAML, OAuth, which IdPs?)</li>
+<li>Do you support role-based access control (RBAC)?</li>
+<li>Can API keys be rotated? (Max expiry period?)</li>
+<li>Do you support IP whitelisting?</li>
+<li>Are audit logs available for export? (Format? Retention?)</li>
+</ol>
+
+<p><strong>Section 4: Availability & Performance (8 kérdés)</strong></p>
+
+<ol start="26">
+<li>What is your SLA for uptime? (Percentage? Credits if breached?)</li>
+<li>What are your rate limits? (Requests/min, tokens/min?)</li>
+<li>Do you offer dedicated capacity? (Pricing?)</li>
+<li>What is your disaster recovery plan? (RTO/RPO?)</li>
+<li>Where are your data centers located? (Regions?)</li>
+<li>Do you have redundancy across multiple regions?</li>
+<li>What is typical API latency? (p50, p95, p99?)</li>
+<li>How do you handle model updates? (Notification period? Version pinning?)</li>
+</ol>
+
+<p><strong>Section 5: Vendor Stability & Exit (7 kérdés)</strong></p>
+
+<ol start="34">
+<li>How many enterprise customers do you have? (>1000 employees)</li>
+<li>Can you provide 3 reference customers? (Similar industry/size)</li>
+<li>What is your company's funding status? (Last round? Runway?)</li>
+<li>What is the data export process if we terminate? (Format? Timeline?)</li>
+<li>What is the contract termination notice period?</li>
+<li>What happens to our data after contract termination? (Deletion timeline?)</li>
+<li>Do you have an M&A notification clause? (If acquired, will you notify?)</li>
+</ol>
+
+<h3>Scoring & Decision Matrix</h3>
+
+<p><strong>Weight distribution:</strong></p>
+
+<ul>
+<li>Security & Compliance: 35%</li>
+<li>Data Handling: 30%</li>
+<li>Availability & Performance: 20%</li>
+<li>Vendor Stability: 10%</li>
+<li>Access Control: 5%</li>
+</ul>
+
+<p><strong>Scoring scale per question:</strong></p>
+<ul>
+<li>0 = Not acceptable / No answer</li>
+<li>1 = Partially acceptable / Needs improvement</li>
+<li>2 = Acceptable / Meets requirements</li>
+<li>3 = Exceeds expectations / Best-in-class</li>
+</ul>
+
+<p><strong>Decision thresholds:</strong></p>
+
+<pre><code>Total Score (max 120):
+- 100-120: APPROVED (green light)
+- 80-99: CONDITIONAL APPROVAL (yellow, needs mitigation plan)
+- 60-79: HIGH RISK (red, not recommended unless business critical + executive approval)
+- <60: REJECTED (do not use)
+</code></pre>
+
+<p><strong>Automatic disqualifiers (any one = instant reject):</strong></p>
+<ul>
+<li>❌ No SOC 2 Type II or ISO 27001 certification</li>
+<li>❌ Cannot commit to EU境内 data residency (for GDPR-sensitive use cases)</li>
+<li>❌ Uses customer data for training without opt-out (free-tier services)</li>
+<li>❌ No DPA / refuses to sign EU SCC</li>
+<li>❌ Recent security breach (<12 months) without transparent post-mortem</li>
+<li>❌ Financial instability (< 6 months runway, frequent layoffs)</li>
+</ul>
+
+<h2>Third-Party AI Contract Negotiation</h2>
+
+<h3>Must-Have Contract Clauses</h3>
+
+<p><strong>1. Data Processing & Privacy Clauses</strong></p>
+
+<pre><code>Standard language to request:
+
+"Vendor shall not use Customer Data for training, improving, or developing
+Vendor's AI models, unless Customer provides explicit written consent for
+each specific use case."
+
+"Vendor shall store and process all Customer Data within the European Union.
+Any cross-border data transfer outside the EU境內 requires prior written
+approval from Customer and must comply with GDPR Chapter V requirements."
+
+"Upon termination or expiration of this Agreement, Vendor shall, within 30 days,
+return or securely delete all Customer Data, including backups, and provide
+written certification of such deletion."
+</code></pre>
+
+<p><strong>2. Security & Audit Rights</strong></p>
+
+<pre><code>"Customer reserves the right to audit Vendor's security controls annually,
+either through on-site visit or independent third-party assessment at
+Customer's expense."
+
+"Vendor shall maintain and provide upon request: ISO 27001 certification,
+SOC 2 Type II report (no older than 18 months), and penetration test results
+(no older than 12 months)."
+
+"Vendor shall notify Customer within 24 hours of any security incident
+affecting Customer Data, and provide detailed incident report within 72 hours."
+</code></pre>
+
+<p><strong>3. SLA & Performance Guarantees</strong></p>
+
+<pre><code>"Vendor guarantees 99.9% monthly uptime (measured as API availability).
+If uptime falls below guaranteed level, Customer shall receive service
+credits as follows:
+- 99.0-99.9%: 10% monthly fee credit
+- 98.0-99.0%: 25% monthly fee credit
+- <98.0%: 50% monthly fee credit"
+
+"Vendor shall provide 30 days advance notice of any material changes to
+AI model, including model version updates, which may affect accuracy or
+performance. Customer reserves the right to continue using previous model
+version for up to 90 days during transition period."
+</code></pre>
+
+<p><strong>4. Liability & Indemnification</strong></p>
+
+<pre><code>"Vendor shall indemnify and hold harmless Customer from any third-party
+claims arising from:
+(a) Intellectual property infringement related to AI model training data
+(b) GDPR violations caused by Vendor's data processing practices
+(c) Discriminatory outcomes from AI model bias, provided Customer used
+    the AI Service in accordance with Vendor's documentation"
+
+"Vendor's liability cap shall not be less than 12 months of fees paid by
+Customer, or €5,000,000, whichever is greater, for claims related to data
+breach, security incidents, or regulatory fines."
+</code></pre>
+
+<p><strong>5. Termination & Exit</strong></p>
+
+<pre><code>"Either party may terminate this Agreement with 90 days written notice.
+Upon termination, Vendor shall:
+(a) Provide Customer Data export in standard format (JSON, CSV) within 30 days
+(b) Provide 60-day transition assistance at no additional cost
+(c) Delete all Customer Data from production and backup systems within 45 days
+(d) Provide written certification of data deletion"
+
+"In case of Vendor acquisition or change of control, Customer shall have the
+right to terminate this Agreement within 60 days of such event without penalty."
+</code></pre>
+
+<h2>Ongoing Vendor Management</h2>
+
+<h3>Quarterly Vendor Review Checklist</h3>
+
+<pre><code>□ Performance Review
+  - Uptime/availability metrics review (SLA compliance?)
+  - Latency/response time trends (degradation?)
+  - Error rate analysis (increasing errors?)
+  - Rate limit breaches (need to upgrade tier?)
+
+□ Security Review
+  - Any security incidents reported? (vendor transparency report)
+  - SOC 2 / ISO certifications still valid? (expiry dates)
+  - Any new CVEs or vulnerabilities disclosed?
+  - Penetration test results review (if shared)
+
+□ Compliance Review
+  - Any regulatory changes affecting the vendor? (new GDPR guidance, AI Act)
+  - DPA still current? (any sub-processor changes?)
+  - Vendor's compliance posture changes? (new certifications gained/lost)
+
+□ Financial Health Check
+  - Any funding news? (new round raised or layoffs?)
+  - Pricing changes communicated? (sudden increases?)
+  - M&A rumors or news? (acquisition target?)
+
+□ Relationship Health
+  - Support responsiveness acceptable? (ticket resolution time)
+  - Product roadmap transparency? (are we involved in beta programs?)
+  - Executive relationship maintained? (QBR meetings held?)
+
+□ Cost Optimization
+  - Are we using purchased capacity efficiently? (under/over-utilized?)
+  - Any new pricing tiers or packages available?
+  - Can we consolidate vendors to reduce costs?
+</code></pre>
+
+<h3>Vendor Risk Register</h3>
+
+<p><strong>Maintain living document tracking all AI vendors:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Service</th>
+<th>Risk Level</th>
+<th>Last Assessment</th>
+<th>Next Review</th>
+<th>Owner</th>
+<th>Open Issues</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI</td>
+<td>GPT-5 API</td>
+<td>MEDIUM</td>
+<td>2025-09-15</td>
+<td>2025-12-15</td>
+<td>CTO</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td>Claude Opus</td>
+<td>LOW</td>
+<td>2025-10-01</td>
+<td>2026-01-01</td>
+<td>CISO</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Vendor X</td>
+<td>HR Screening</td>
+<td>HIGH</td>
+<td>2025-08-20</td>
+<td>2025-11-20</td>
+<td>CISO</td>
+<td>SOC 2 expiring in 30 days</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Risk escalation triggers:</strong></p>
+<ul>
+<li>Risk level increases from LOW → MEDIUM → HIGH</li>
+<li>Open issues >90 days unresolved</li>
+<li>Security incident at vendor</li>
+<li>Certification expiry without renewal</li>
+<li>M&A announcement</li>
+</ul>
+
+<h2>Multi-Vendor Strategy & Vendor Diversification</h2>
+
+<h3>Primary + Fallback Architecture</h3>
+
+<p><strong>Recommended setup for mission-critical AI:</strong></p>
+
+<pre><code>Architecture:
+┌─────────────┐
+│ Application │
+└──────┬──────┘
+       │
+   ┌───▼────┐
+   │ Router │ (intelligent routing layer)
+   └───┬────┘
+       │
+   ┌───┴────────────┐
+   │                │
+┌──▼────┐      ┌───▼────┐
+│Primary│      │Fallback│
+│Vendor │      │ Vendor │
+│(90%)  │      │ (10%)  │
+└───────┘      └────────┘
+
+Logic:
+- 90% traffic → Primary vendor (lowest cost, best performance)
+- 10% traffic → Fallback vendor (keep warm, validate works)
+- If Primary unavailable (503, timeout) → 100% to Fallback
+- If Primary degraded (high latency, errors) → gradual shift to Fallback
+</code></pre>
+
+<p><strong>Implementation example (pseudocode):</strong></p>
+
+<pre><code>function callAI(prompt, options) {
+  // 90/10 split for testing
+  if (random() < 0.9) {
+    try {
+      return await primaryVendor.call(prompt, options);
+    } catch (error) {
+      if (error.isUnavailable) {
+        return await fallbackVendor.call(prompt, options);
+      }
+      throw error;
+    }
+  } else {
+    return await fallbackVendor.call(prompt, options);
+  }
+}
+</code></pre>
+
+<h3>Cost Considerations</h3>
+
+<p><strong>Multi-vendor setup extra költségek:</strong></p>
+
+<ul>
+<li><strong>Fallback vendor retainer:</strong> €5,000-20,000/hó (hogy active maradjon az account)</li>
+<li><strong>Development overhead:</strong> €30,000-80,000 (routing layer build, 4-8 week project)</li>
+<li><strong>Operational overhead:</strong> +20% ops time (monitoring két vendor helyett egy)</li>
+<li><strong>Testing overhead:</strong> Kétszeres QA effort (mindkét vendor tesztelése)</li>
+</ul>
+
+<p><strong>ROI calculation:</strong></p>
+
+<pre><code>Cost of single-vendor outage:
+€50K/hour revenue loss × 6 hours (avg annual downtime) = €300K/year risk
+
+Multi-vendor setup cost:
+- One-time: €60K (development)
+- Annual: €120K (fallback retainer + ops overhead)
+
+Break-even: If >1 major outage/year avoided, multi-vendor éri meg.
+</code></pre>
+
+<h2>Actionable Checklist: Third-Party AI Vendor Onboarding</h2>
+
+<pre><code>□ Week 1: Discovery & Assessment
+  - Identify business use case and requirements
+  - Shortlist 3-5 potential vendors
+  - Send security questionnaire (40 questions)
+
+□ Week 2-3: Vendor Evaluation
+  - Score vendor responses (assessment framework)
+  - Request SOC 2, ISO certificates
+  - Reference calls (2-3 customers per vendor)
+  - POC/trial setup (if available)
+
+□ Week 4-5: Contract Negotiation
+  - DPA + EU SCC review by legal
+  - Custom clauses negotiation (data residency, audit rights, liability)
+  - SLA terms finalization
+  - Executive approval (if >€100K annual spend)
+
+□ Week 6: Technical Integration
+  - API keys provisioning (secure storage in vault)
+  - SSO integration setup
+  - Monitoring & alerting configuration
+  - Fallback mechanism testing (if multi-vendor)
+
+□ Week 7: Launch & Documentation
+  - Production rollout (phased, 10% → 50% → 100%)
+  - Runbook documentation (incident response, escalation)
+  - Training for internal users
+  - Add to vendor risk register
+
+□ Ongoing: Quarterly Reviews
+  - Performance metrics review
+  - Security posture check
+  - Cost optimization analysis
+  - Contract renewal planning (90 days before expiry)
+</code></pre>
+
+<h2>Összegzés</h2>
+
+<p>Third-party AI vendor risk management 2025 novemberében már nem opcionális due diligence, hanem critical business function. A vállalatok átlagosan 15-20 AI vendor-től függnek, amelyek mindegyike potenciális single point of failure lehet adatbiztonsági, compliance, vagy business continuity szempontból.</p>
+
+<p>A sikeres third-party AI risk management kulcsa: strukturált vendor assessment process, proaktív monitoring, és multi-vendor stratégia a kritikus use case-ekhez. Ne várj az első vendor security breach-re vagy outage-re - build resilience proaktívan.</p>
+
+<h2>További Források</h2>
+
+<ul>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank">NIST AI Risk Management Framework - Third-Party AI Considerations</a></li>
+<li><a href="https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-072020-concepts-controller-and-processor_en" target="_blank">EDPB Guidelines - Controller and Processor in AI Context</a></li>
+<li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank">EU AI Act - Provider and Deployer Obligations</a></li>
+<li><a href="https://www.enisa.europa.eu/publications/guidelines-for-securing-artificial-intelligence" target="_blank">ENISA - Guidelines for Securing AI</a></li>
+<li><a href="https://www.iso.org/standard/81230.html" target="_blank">ISO/IEC 42001:2023 - AI Management System (includes supplier management)</a></li>
+</ul>
