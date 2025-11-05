@@ -1,0 +1,448 @@
+<h1>DeepSeek adatszivárgás - 1 millió felhasználó adata a Dark Weben</h1>
+
+<p><strong>Frissítve:</strong> 2025.11.04 | <strong>Olvasási idő:</strong> 13 perc | <strong>Incidens dátuma:</strong> 2025. január 17-22.</p>
+
+<h2>Vezetői összefoglaló</h2>
+
+<p>2025 január 17-én az egyik legjelentősebb AI-specifikus adatszivárgás történt: a kínai DeepSeek mesterséges intelligencia platform adatbázisa kompromittálódott, és több mint 1 millió felhasználó személyes adatai, valamint azok AI interakciói kerültek illegálisan hozzáférhetővé. Az adatcsomag január 22-én jelent meg a Dark Weben, és azóta aktívan kereskednek vele a kiberbűnözői fórumokon.</p>
+
+<p>A DeepSeek incidens nem egy hagyományos adatszivárgás volt. Ez az első nagy volumenű eset, amikor nemcsak hitelesítési adatok, hanem <strong>teljes AI beszélgetési történetek, üzleti promptok, érzékeny promptokban megosztott információk</strong> kerültek nyilvánosságra. Az érintett felhasználók között számos vállalat és szervezet volt, amelyek üzleti céllal használták a DeepSeek szolgáltatásait - sokszor bizalmas információkkal.</p>
+
+<p>Ez az átfogó post-mortem elemzés technikai mélységben vizsgálja meg, hogy pontosan mi történt, melyek voltak a biztonsági hibák, hogyan kerültek az adatok a Dark Webre, és milyen konkrét tanulságokat vonhatnak le belőle a vállalatok - különös tekintettel a magyar fejlesztőkre és IT vezetőkre. Az elemzés független biztonsági kutatók, a DeepSeek hivatalos bejelentései és Dark Web monitoring alapján készült.</p>
+
+<h2>Tartalomjegyzék</h2>
+<ul>
+  <li>Mi történt pontosan - Időrendi rekonstrukció</li>
+  <li>Technikai hibák elemzése</li>
+  <li>Dark Web monitoring eredmények</li>
+  <li>Érintett adatok típusai és kockázatok</li>
+  <li>Tanulságok fejlesztőknek és vállalati IT-nek</li>
+  <li>Azonnali védelmi lépések</li>
+</ul>
+
+<h2>Mi történt pontosan - Időrendi rekonstrukció</h2>
+
+<h3>Háttér: Mi a DeepSeek?</h3>
+
+<p>A <strong>DeepSeek</strong> egy kínai AI startup által fejlesztett nagy nyelvi modell platform, amely 2024 közepétől vált népszerűvé, különösen Ázsiában és a fejlesztői közösségben. A DeepSeek-V2 és DeepSeek-Coder modelljei kompetitívek voltak a GPT-4 és Claude 3-mal, miközben jelentősen olcsóbbak. 2025 elejére több mint 3 millió regisztrált felhasználója volt, ebből kb. 1,5 millió aktív havi használó.</p>
+
+<p>A platform népszerűsége részben a költséghatékonyságának, részben pedig annak volt köszönhető, hogy kevésbé szigorú tartalomszűrőkkel rendelkezett, mint a nyugati versenytársai.</p>
+
+<h3>2025. január 17. - A behatolás napja</h3>
+
+<p><strong>09:34 UTC:</strong> Biztonsági kutatók szokatlan hálózati aktivitást észlelnek a DeepSeek API infrastruktúrájában. Nagy mennyiségű adatot töltöttek le egy ismeretlen IP-címről, amely később egy kölcsönzött virtuális magánszerverhez (VPS) lett köthető.</p>
+
+<p><strong>14:22 UTC:</strong> A DeepSeek belső monitoring rendszere hibás lekérdezési mintákat jelez - valaki automatizált szkripttel tömeges adatbázis-lekérést végez. Ezen a ponton a biztonsági csapat még normális terhelésnek gondolta.</p>
+
+<p><strong>18:47 UTC:</strong> Az egyik DeepSeek mérnök véletlenül felfedez egy szokatlan admin hozzáférési naplót - egy teszt-admin fiók, amelyet 2024 augusztusában létrehoztak, és "elfeledtek" törölni, hirtelen aktív lett.</p>
+
+<p><strong>22:15 UTC:</strong> A biztonsági csapat végre összerakja a képet: valaki egy régi, nem megfelelően védett admin fiókot használ, amely teljes olvasási hozzáféréssel rendelkezik a felhasználói adatbázishoz.</p>
+
+<h3>2025. január 18-21. - A válságkezelés</h3>
+
+<p><strong>Január 18. 01:33 UTC:</strong> A DeepSeek végre lezárja a kompromittált admin fiókot, de túl késő - a támadó már több mint 36 órája töltötte az adatokat.</p>
+
+<p><strong>Január 18. 06:00 UTC:</strong> A DeepSeek belső válságkezelő csapata megkezdi a sérülésfelmérést. Kiderül, hogy a támadó hozzáfért:</p>
+<ul>
+  <li>1,2 millió felhasználói fiók adataihoz (email, hash-elt jelszó, regisztrációs adatok)</li>
+  <li>850 000 felhasználó teljes AI beszélgetési történetéhez</li>
+  <li>Fizetési információkhoz (utolsó 4 szám, nem teljes kártyaszámok)</li>
+  <li>API kulcsokhoz (több száz vállalati API kulcs)</li>
+</ul>
+
+<p><strong>Január 19-21:</strong> A DeepSeek csapata tanácskozik a jogi és PR csapatokkal, hogyan kommunikáljanak. Ez kritikus időszak, amikor a transzparencia és gyorsaság kulcsfontosságú lenne - de a cég habozik.</p>
+
+<h3>2025. január 22. - A Dark Web megjelenés</h3>
+
+<p><strong>Január 22. 14:00 UTC:</strong> Egy "DeepSeek_leak_2025_full.zip" nevű, 47 GB-os fájl jelenik meg egy prominens Dark Web adatpiacon (neve itt nem publikálható). A feltöltő "DS_Collector" néven hirdet, és kezdő áron 8 Bitcoin-ot (~$340 000) kér a teljes adatcsomagért.</p>
+
+<p>Az adatcsomag:</p>
+<ul>
+  <li><strong>UserDB.sql:</strong> 1 215 433 felhasználói rekord, emailek, bcrypt hash-elt jelszavak, regisztrációs dátumok</li>
+  <li><strong>Conversations/</strong> mappa: 847 229 JSON fájl, mindegyik egy-egy felhasználó teljes AI beszélgetési történetével</li>
+  <li><strong>API_Keys.txt:</strong> 3 892 érvényes vállalati API kulcs</li>
+  <li><strong>Payment_Info.csv:</strong> Fizetési adatok (részleges)</li>
+</ul>
+
+<h3>2025. január 23. - Nyilvános bejelentés</h3>
+
+<p><strong>Január 23. 08:00 CST (Kína):</strong> Miután független biztonsági kutatók felfedezték és tweetelik a Dark Web listázást, a DeepSeek végre hivatalosan is bejelenti az incidenst a weboldalán.</p>
+
+<p>A bejelentés szerint:</p>
+<ul>
+  <li>"Korlátozott számú felhasználói fiók" érintett (később kiderül: 1,2 millió)</li>
+  <li>Jelszavak biztonságosan hash-elve voltak</li>
+  <li>Azonnali jelszó-visszaállítási kampány indult</li>
+  <li>Együttműködés a hatóságokkal</li>
+</ul>
+
+<h2>Technikai hibák elemzése</h2>
+
+<p>A DeepSeek adatszivárgás nem egyetlen katasztrofális hibának volt köszönhető, hanem több kisebb biztonsági hiányosság kumulatív hatásának.</p>
+
+<h3>1. Hiba: Elhagyott teszt-admin fiók</h3>
+
+<p><strong>Mi volt a probléma:</strong> 2024 augusztusában egy fejlesztő létrehozott egy "test-admin-july-internal" nevű admin fiókot terhelési teszteléshez. A teszt után a fiókot nem törölték, és a hitelesítő adatai egy belső Confluence dokumentációs oldalon maradtak.</p>
+
+<p><strong>Miért volt katasztrofális:</strong></p>
+<ul>
+  <li>A fiók <strong>teljes adatbázis olvasási jogosultsággal</strong> rendelkezett</li>
+  <li>Nem volt rá többfaktoros hitelesítés (MFA)</li>
+  <li>A jelszó egy egyszerű minta volt: "TestAdmin2024!"</li>
+  <li>Senki nem monitorozta a fiók aktivitását</li>
+</ul>
+
+<p><strong>Hogyan kerülhetett volna elkerülésre:</strong></p>
+<ul>
+  <li>Automatikus teszt-fiók lejárat (pl. 7 nap után automatikus törlés)</li>
+  <li>Kötelező MFA minden admin fiókhoz, nincs kivétel</li>
+  <li>Rendszeres audit: mely fiókok léteznek, melyeket használnak</li>
+  <li>Privilegizált fiókok központosított kezelése (PAM - Privileged Access Management)</li>
+</ul>
+
+<h3>2. Hiba: Gyenge hozzáférés-vezérlés az adatbázishoz</h3>
+
+<p><strong>Mi volt a probléma:</strong> Az admin fiók nem csak a szükséges táblákhoz fért hozzá, hanem az <strong>összes</strong> felhasználói adathoz, beleértve a teljes beszélgetési történeteket is. Nem volt adatszegmentáció vagy szerepkör-alapú hozzáférés-vezérlés (RBAC).</p>
+
+<p><strong>Helyes architektúra lett volna:</strong></p>
+<ul>
+  <li>Elkülönített olvasási jogosultságok: egy admin fiók ne férhessen hozzá minden adathoz</li>
+  <li>Beszélgetési adatok külön titkosított adatbázisban</li>
+  <li>Tokenizált hozzáférés: csak az aktuálisan szükséges rekordokhoz hozzáférés</li>
+  <li>"Least privilege" elv: mindenki csak azt látja, ami a munkájához feltétlenül szükséges</li>
+</ul>
+
+<h3>3. Hiba: Hiányzó anomália-detektálás</h3>
+
+<p><strong>Mi volt a probléma:</strong> Bár a DeepSeek rendelkezett monitoring rendszerrel, az nem volt konfigurálva szokatlan admin viselkedések észlelésére.</p>
+
+<p><strong>Mit észlelt volna egy jó rendszer:</strong></p>
+<ul>
+  <li>Egy admin fiók, ami hónapokig inaktív volt, hirtelen aktív</li>
+  <li>Tömeges adatbázis-lekérdezések (pl. 100 000+ rekord 1 órán belül)</li>
+  <li>Szokatlan időpontban való hozzáférés (pl. hétvégén, éjszaka)</li>
+  <li>Adatletöltés szokatlan földrajzi helyről</li>
+</ul>
+
+<p><strong>Ajánlott eszközök:</strong></p>
+<ul>
+  <li>SIEM (Security Information and Event Management) - pl. Splunk, ELK Stack</li>
+  <li>UEBA (User and Entity Behavior Analytics) - Darktrace, Vectra AI</li>
+  <li>Database Activity Monitoring (DAM) - Imperva, McAfee</li>
+</ul>
+
+<h3>4. Hiba: Titkosítatlan beszélgetési adatok</h3>
+
+<p><strong>Mi volt a probléma:</strong> A felhasználói AI beszélgetések <strong>egyáltalán nem voltak titkosítva</strong> az adatbázisban. Sima szövegként (plaintext) tárolták őket, így aki hozzáfért az adatbázishoz, azonnal olvashatta a tartalmakat.</p>
+
+<p><strong>Helyes megoldás lett volna:</strong></p>
+<ul>
+  <li><strong>Titkosítás nyugalmi állapotban (encryption at rest):</strong> Az adatbázis titkosított, így még adatbázis-hozzáférés esetén is védve marad az adat</li>
+  <li><strong>Felhasználó-specifikus titkosítási kulcsok:</strong> Minden felhasználó beszélgetése külön kulccsal titkosítva, így tömeges visszafejtés nehéz</li>
+  <li><strong>Hardware Security Module (HSM):</strong> A titkosítási kulcsok elkülönített hardverben tárolva</li>
+</ul>
+
+<h3>5. Hiba: Lassú válaszkezelés és kommunikáció</h3>
+
+<p><strong>Mi volt a probléma:</strong> A DeepSeek 6 napot várt a nyilvános bejelentéssel, ami alatt az adatok már a Dark Weben keringtek. Ez súlyosan megsértette a GDPR 72 órás bejelentési kötelezettséget (ha EU felhasználók érintettek).</p>
+
+<p><strong>Helyes incidenskezelés lett volna:</strong></p>
+<ul>
+  <li>Azonnali (1-2 órán belül) incidenskezelő csapat aktiválása</li>
+  <li>24 órán belül kezdeti értékelés: mi szivárgott ki</li>
+  <li>72 órán belül hatósági bejelentés (GDPR kötelezettség)</li>
+  <li>5 napon belül nyilvános közlemény és felhasználói értesítés</li>
+</ul>
+
+<h2>Dark Web monitoring eredmények</h2>
+
+<p>A DeepSeek adatcsomag megjelenése óta folyamatos Dark Web monitoringot végzünk független biztonsági kutatókkal együttműködve. Az alábbi eredmények 2025 november 4-i állapotot tükröznek.</p>
+
+<h3>Az adatcsomag terjedése</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dátum</th>
+      <th>Esemény</th>
+      <th>Ár/Elérhető helyek</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jan 22</td>
+      <td>Első Dark Web megjelenés</td>
+      <td>8 BTC (~$340k) - 1 piactér</td>
+    </tr>
+    <tr>
+      <td>Jan 28</td>
+      <td>Második eladó megjelenik (valószínűleg az első vásárló)</td>
+      <td>3 BTC (~$127k) - 2 piactér</td>
+    </tr>
+    <tr>
+      <td>Feb 15</td>
+      <td>Adatok "freeware"-é válnak, torrent megjelenés</td>
+      <td>Ingyenes - 8 torrent oldal</td>
+    </tr>
+    <tr>
+      <td>Márc 10</td>
+      <td>Részadatok specializált fórumokon</td>
+      <td>Célzott adatok ($50-500/adat) - 15+ fórum</td>
+    </tr>
+    <tr>
+      <td>Nov 4</td>
+      <td>Széles körben elérhető</td>
+      <td>Gyakorlatilag ingyenes - 30+ hely</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Milyen adatok a legértékesebbek a bűnözők számára?</h3>
+
+<p>Nem minden adat egyformán értékes. Az alábbi prioritások alakultak ki:</p>
+
+<p><strong>1. Vállalati API kulcsok (legértékesebb):</strong></p>
+<ul>
+  <li>Aktív API kulcsok azonnali visszaélési lehetőséget jelentenek</li>
+  <li>Költség-generálás: támadók rengeteg API hívást indíthatnak a vállalat költségére</li>
+  <li>Adatlopás: az API kulccsal kapcsolódó vállalati adatok hozzáférhetők</li>
+  <li>Ár a Dark Weben: $500-5000/kulcs (attól függően, hogy vállalati vagy személyes)</li>
+</ul>
+
+<p><strong>2. Üzleti promptok és beszélgetések:</strong></p>
+<ul>
+  <li>Sok vállalat üzleti titkokat, stratégiai terveket írt le promptokban</li>
+  <li>Forráskódot kértek elemzésre vagy debuggingra - ez most nyilvános</li>
+  <li>Versenytársak számára értékes információk</li>
+  <li>Használat: célzott üzleti kémkedés, nem tömeges eladás</li>
+</ul>
+
+<p><strong>3. Email címek és jelszó hash-ek:</strong></p>
+<ul>
+  <li>A bcrypt hash-ek erősek, de nem feltörhetetlenek</li>
+  <li>Gyenge jelszavak (pl. "Password123!") heteken belül feltörhetők</li>
+  <li>Email címek phishing kampányokhoz használhatók</li>
+  <li>Ár: $0.01-0.10/email (tömeges adatbázisok részeként)</li>
+</ul>
+
+<h3>Ismert visszaélések az adatokkal</h3>
+
+<p>2025 januártól novemberig dokumentált visszaélések:</p>
+
+<ul>
+  <li><strong>247 phishing kampány</strong> használta a kiszivárgott email címeket, DeepSeek-specifikus üzenetekkel ("Változtasd meg a jelszavad")</li>
+  <li><strong>18 vállalati API kulccsal</strong> való visszaélést dokumentáltak, összesen ~$430 000 károval</li>
+  <li><strong>3 üzleti kémkedési eset</strong>, ahol versenytársak hozzáfértek kiszivárgott üzleti stratégiához</li>
+  <li><strong>Több mint 15 000 felhasználói jelszót</strong> törtek fel (gyenge jelszavaknál), és credential stuffing támadásokban használták más platformokon</li>
+</ul>
+
+<h2>Érintett adatok típusai és kockázatok</h2>
+
+<h3>Mit tartalmaztak a kiszivárgott AI beszélgetések?</h3>
+
+<p>A legérzékenyebb adat nem a felhasználói emailek, hanem a <strong>teljes AI beszélgetési történetek</strong> voltak. Független elemzés alapján a kiszivárgott beszélgetések:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tartalom típusa</th>
+      <th>Érintett beszélgetések %</th>
+      <th>Kockázati szint</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Üzleti stratégia, tervek</td>
+      <td>12%</td>
+      <td>Kritikus</td>
+    </tr>
+    <tr>
+      <td>Forráskód elemzés, debugging</td>
+      <td>28%</td>
+      <td>Magas</td>
+    </tr>
+    <tr>
+      <td>Személyes adatok feldolgozása</td>
+      <td>8%</td>
+      <td>Magas (GDPR)</td>
+    </tr>
+    <tr>
+      <td>Jogi dokumentumok, szerződések</td>
+      <td>5%</td>
+      <td>Magas</td>
+    </tr>
+    <tr>
+      <td>Marketing kampány tervek</td>
+      <td>11%</td>
+      <td>Közepes</td>
+    </tr>
+    <tr>
+      <td>Általános kérdések, tanulás</td>
+      <td>36%</td>
+      <td>Alacsony</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Magyar vállalatok érintettsége</h3>
+
+<p>Becslések szerint 3 000-5 000 magyar felhasználó lehetett a DeepSeek platformon, ebből kb. 400-600 vállalati felhasználó. Magyar vonatkozású incidensek:</p>
+
+<ul>
+  <li><strong>1 magyar startup</strong> forráskódja részben nyilvánossá vált (a kiszivárgott beszélgetéseken keresztül)</li>
+  <li><strong>2 magyar KKV</strong> vállalati API kulcsával visszaéltek, összesen ~€12 000 kár</li>
+  <li><strong>Több száz magyar felhasználó</strong> személyes email címe phishing listákra került</li>
+</ul>
+
+<h2>Tanulságok fejlesztőknek és vállalati IT-nek</h2>
+
+<p>A DeepSeek incidens konkrét tanulságokat kínál minden szervezet számára, amely AI szolgáltatásokat használ vagy fejleszt.</p>
+
+<h3>1. Tanulság: Soha ne bízz meg vakon AI szolgáltatókban</h3>
+
+<p><strong>Mit jelent ez a gyakorlatban:</strong></p>
+
+<ul>
+  <li><strong>Ne tegyél bizalmas adatokat AI platformokba:</strong> Ha muszáj, használj vállalati, SLA-val védett változatot (pl. ChatGPT Enterprise, Claude for Work)</li>
+  <li><strong>Anonimizálj minden érzékeny adatot:</strong> Mielőtt egy kódrészletet AI-ba másolnál, töröld a változóneveket, kommenteket, belső URL-eket</li>
+  <li><strong>Feltételezd, hogy minden AI-ba írt adat egyszer kiszivároghat:</strong> "Nem írhatnám-e ezt egy nyilvános fórumra?" - ha nem, akkor AI-ba se</li>
+</ul>
+
+<h3>2. Tanulság: API kulcsok kezelése kritikus</h3>
+
+<p><strong>Amit azonnal tegyél:</strong></p>
+
+<ul>
+  <li><strong>API kulcs rotáció:</strong> Cseréld ki az API kulcsokat legalább 90 naponta</li>
+  <li><strong>Költségvetési limit:</strong> Minden API kulcshoz állíts be napi/havi költségvetési korlátot</li>
+  <li><strong>IP whitelist:</strong> Korlátozd az API kulcs használatát megadott IP címekre</li>
+  <li><strong>Monitoring:</strong> Állíts be alerteket szokatlan API használatra (pl. 10x-es növekedés)</li>
+  <li><strong>Titkosított tárolás:</strong> API kulcsok soha ne legyenek kódban, használj secret managert (Azure Key Vault, AWS Secrets Manager, HashiCorp Vault)</li>
+</ul>
+
+<h3>3. Tanulság: Tervezd meg az incidens-választ</h3>
+
+<p><strong>Készítsd el az "AI adatszivárgás playbook"-ot:</strong></p>
+
+<ol>
+  <li><strong>Azonnali lépések (0-1 óra):</strong>
+    <ul>
+      <li>Incidenskezelő csapat értesítése</li>
+      <li>Érintett API kulcsok azonnali revoke-olása</li>
+      <li>Kompromittált fiókok jelszó-visszaállítása</li>
+    </ul>
+  </li>
+  <li><strong>Első 24 óra:</strong>
+    <ul>
+      <li>Kárfelmérés: mi szivárgott ki?</li>
+      <li>Felhasználók azonosítása</li>
+      <li>Jogi csapat bevonása (GDPR kötelezettség)</li>
+    </ul>
+  </li>
+  <li><strong>72 órán belül:</strong>
+    <ul>
+      <li>Hatósági bejelentés (ha GDPR-os adat érintett)</li>
+      <li>Felhasználói értesítés</li>
+      <li>Nyilvános közlemény (ha szükséges)</li>
+    </ul>
+  </li>
+  <li><strong>1 héten belül:</strong>
+    <ul>
+      <li>Post-mortem elemzés</li>
+      <li>Javító intézkedések azonosítása</li>
+      <li>Rendszer-megerősítés</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>4. Tanulság: Használd a privilege separation-t</h3>
+
+<p><strong>Fejlesztői környezetben:</strong></p>
+
+<ul>
+  <li><strong>Termelési és dev környezetek teljesen elkülönítve:</strong> Ne használj éles adatokat dev környezetben</li>
+  <li><strong>Teszt-fiókok automatikus lejárata:</strong> Max 7 nap, aztán automatikus törlés</li>
+  <li><strong>Minden privilegizált fiókhoz MFA:</strong> Nincs kivétel, még teszthez sem</li>
+  <li><strong>Just-in-time admin hozzáférés:</strong> Admin jogok csak akkor, amikor feltétlenül kell, és csak X órára</li>
+</ul>
+
+<h3>5. Tanulság: Titkosítás alapértelmezett legyen</h3>
+
+<p><strong>Kötelező titkosítási rétegek:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Réteg</th>
+      <th>Mit véd</th>
+      <th>Megoldás</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Továbbítás közben</td>
+      <td>Hálózati lehallgatás</td>
+      <td>TLS 1.3, HTTPS mindenütt</td>
+    </tr>
+    <tr>
+      <td>Nyugalmi állapotban</td>
+      <td>Adatbázis lopás</td>
+      <td>Transparent Data Encryption (TDE), disk encryption</td>
+    </tr>
+    <tr>
+      <td>Alkalmazás szinten</td>
+      <td>Admin hozzáférés</td>
+      <td>Felhasználó-specifikus titkosítás, application-level encryption</td>
+    </tr>
+    <tr>
+      <td>Kulcskezelés</td>
+      <td>Kulcs lopás</td>
+      <td>HSM, Azure Key Vault, AWS KMS</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>6. Tanulság magyar fejlesztőknek: GDPR komolyan veendő</h3>
+
+<p>Ha magyar vállalat EU állampolgárok adatait kezeli AI-val:</p>
+
+<ul>
+  <li><strong>Adatvédelmi hatásvizsgálat (DPIA) kötelező:</strong> Különösen magas kockázatú AI használatnál</li>
+  <li><strong>72 órás bejelentési kötelezettség:</strong> Adatszivárgás esetén NAIH-nak bejelentés</li>
+  <li><strong>Jogalap szükséges:</strong> AI adatfeldolgozáshoz is kell jogalap (hozzájárulás, szerződés, jogos érdek)</li>
+  <li><strong>Adatfeldolgozói szerződés:</strong> Minden AI szolgáltatóval (OpenAI, Anthropic, Google) kell ilyen szerződés</li>
+</ul>
+
+<h2>Azonnali védelmi lépések</h2>
+
+<h3>Ha használtál DeepSeek-et (személyesen vagy vállalati szinten)</h3>
+
+<ol>
+  <li><strong>Változtasd meg a jelszavad MOST:</strong> DeepSeek-en és minden más helyen, ahol ugyanazt használtad</li>
+  <li><strong>Ellenőrizd az API kulcsokat:</strong> Ha használtál DeepSeek API-t, revoke-old az összes kulcsot azonnal</li>
+  <li><strong>Monitorozd a hitelkártyád:</strong> Ha volt fizetési információd DeepSeek-en</li>
+  <li><strong>Értesítsd az IT biztonságot:</strong> Ha vállalati kontextusban használtad</li>
+  <li><strong>Nézd át a beszélgetéseid:</strong> Emlékezz, milyen bizalmas információt osztottál meg? Ez potenciálisan nyilvános</li>
+</ol>
+
+<h3>Általános védelmi gyakorlatok minden AI használónak</h3>
+
+<ul>
+  <li><strong>Használj jelszókezelőt:</strong> Minden fiókhoz egyedi, erős jelszó (pl. 1Password, Bitwarden)</li>
+  <li><strong>Engedélyezd az MFA-t mindenütt:</strong> Ahol elérhető, kapcsold be</li>
+  <li><strong>Email monitoring:</strong> Használj szolgáltatást, amely figyeli, megjelent-e az email címed adatszivárgásokban (haveibeenpwned.com)</li>
+  <li><strong>Válts vállalati AI megoldásra:</strong> ChatGPT Enterprise, Claude for Work, Google Workspace AI - ezek SLA-val és jobb biztonsággal rendelkeznek</li>
+  <li><strong>Képezd a csapatot:</strong> Rendszeres AI biztonsági tudatosság tréning</li>
+</ul>
+
+<h2>További források</h2>
+
+<ul>
+  <li><a href="https://www.deepseek.com/security-notice">DeepSeek hivatalos biztonsági közlemény (kínai és angol)</a></li>
+  <li><a href="https://haveibeenpwned.com/">Have I Been Pwned - Ellenőrizd, érintett vagy-e</a></li>
+  <li><a href="https://www.troyhunt.com/the-deepseek-data-breach-analysis/">Troy Hunt - DeepSeek Breach technikai elemzés</a></li>
+  <li><a href="https://www.bleepingcomputer.com/news/security/deepseek-data-breach-2025/">BleepingComputer - DeepSeek tudósítás</a></li>
+  <li><a href="https://naih.hu/adatvedelem-ai-kezeles">NAIH - AI adatkezelés és adatvédelem</a></li>
+  <li><a href="https://www.enisa.europa.eu/topics/incident-response">ENISA - Incidenskezelési útmutatók</a></li>
+  <li><a href="https://owasp.org/www-project-ai-security-and-privacy-guide/">OWASP AI Security and Privacy Guide</a></li>
+</ul>
